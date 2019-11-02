@@ -1,0 +1,40 @@
+{
+    "name": "russsiq/laravel-env-manager",
+    "description": "Laravel 6.* environment file manager.",
+    "homepage": "https://github.com/russsiq/laravel-env-manager",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["laravel", "environment file", "manager"],
+    "authors": [{
+        "name": "Рустам Гимранов",
+        "email": "rustam_gimranov@mail.ru",
+        "homepage": "https://github.com/russsiq",
+        "role": "Developer"
+    }],
+    "repositories": [{
+        "type": "vcs",
+        "url": "https://github.com/russsiq/laravel-env-manager"
+    }],
+    "require": {
+        "illuminate/support": "6.*",
+        "php": ">=7.2.0"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "Russsiq\\EnvManager\\": "src/app/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Russsiq\\EnvManager\\EnvManagerServiceProvider"
+            ],
+            "aliases": {
+                "EnvManager": "Russsiq\\EnvManager\\Support\\Facades\\EnvManager"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
