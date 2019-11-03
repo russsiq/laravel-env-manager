@@ -35,7 +35,7 @@ class EnvManager implements EnvManagerContract
     /**
      * Создать новый экземпляр менеджера файла переменных окружения.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @param  Application  $app
      */
     public function __construct(Application $app)
     {
