@@ -120,6 +120,26 @@ class EnvManager implements EnvManagerContract
     }
 
     /**
+     * Сохранить файл окружения.
+     *
+     * @return mixed
+     */
+    public function save(): bool
+    {
+        //
+    }
+
+    /**
+     * Создать файл окружения.
+     *
+     * @return self
+     */
+    public function create(): EnvManagerContract
+    {
+        //
+    }
+
+    /**
      * Получить содержимое файла окружения.
      *
      * @return Collection
