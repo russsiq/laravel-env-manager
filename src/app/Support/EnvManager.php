@@ -60,6 +60,61 @@ class EnvManager implements EnvManagerContract
     }
 
     /**
+     * Проверить существование значения для указанной переменной окружения.
+     *
+     * @param string $name Имя переменной.
+     *
+     * @return bool
+     */
+    public function has(string $name): bool
+    {
+        return $this->variables->has($name);
+    }
+
+    /**
+     * Получить значение для указанной переменной окружения.
+     *
+     * @param  string $name    Имя переменной.
+     * @param  mixed  $default Значение по умолчанию.
+     * @return string
+     */
+    public function get(string $name, $default = null)
+    {
+        return $this->variables->get($name, $default);
+    }
+
+    /**
+     * Установить значение для переменной окружения.
+     *
+     * @param string      $name  Имя переменной.
+     * @param string|null $value Значение переменной.
+     *
+     * @return self
+     */
+    public function set(string $name, $value = null): EnvManagerContract
+    {
+        $this->variables->put($name, $value);
+
+        return $this;
+    }
+
+    /**
+     * Установить значения для переменных окружения.
+     *
+     * @param array $data  Массив из имен и значений.
+     *
+     * @return self
+     */
+    public function setMany(array $data): EnvManagerContract
+    {
+        foreach ($data as $name => $value) {
+            $this->set($name, $value);
+        }
+
+        return $this;
+    }
+
+    /**
      * Сгенерировать случайный ключ для приложения.
      * По мотивам: `\Illuminate\Foundation\Console\KeyGenerateCommand`.
      *
