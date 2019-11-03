@@ -2,6 +2,8 @@
 
 namespace Russsiq\EnvManager\Support;
 
+use RuntimeException;
+
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
@@ -115,6 +117,34 @@ class EnvManager implements EnvManagerContract
         }
 
         return $this;
+    }
+
+    /**
+     * Получить содержимое файла окружения.
+     *
+     * @return Collection
+     */
+    protected function getVariables(): Collection
+    {
+        return collect($this->fileExists() ? $this->getContent() : []);
+    }
+
+    /**
+     * Получить содержимое файла окружения.
+     *
+     * @return array
+     *
+     * @throws RuntimeException
+     */
+    protected function getContent(): array
+    {
+        $result = parse_ini_file($this->filePath(), false, INI_SCANNER_RAW);
+
+        if (is_array($result)) {
+            return $result;
+        }
+
+        throw new RuntimeException('Unable to read the environment file.');
     }
 
     /**
