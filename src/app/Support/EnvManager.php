@@ -29,7 +29,7 @@ class EnvManager implements EnvManagerContract
 	public function __construct(Application $app)
 	{
 		$this->app = $app;
-        $this->filePath = $this->app->environmentFilePath();
+		$this->filePath = $this->app->environmentFilePath();
 	}
 
     /**
