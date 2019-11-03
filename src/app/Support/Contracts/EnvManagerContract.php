@@ -28,13 +28,13 @@ interface EnvManagerContract
     public function has(string $name): bool;
 
     /**
-     * Получить значения для указанной переменной окружения.
+     * Получить значение для указанной переменной окружения.
      *
-     * @param string $name Имя переменной.
-     *
+     * @param  string      $name    Имя переменной.
+     * @param  mixed       $default Значение по умолчанию.
      * @return string|null
      */
-    public function get(string $name): string;
+    public function get(string $name, $default = null);
 
     /**
      * Установить значение для переменной окружения.
@@ -65,7 +65,7 @@ interface EnvManagerContract
     /**
      * Создать файл окружения.
      *
-     * @return mixed
+     * @return self
      */
-    public function create(): bool;
+    public function create(): self;
 }
