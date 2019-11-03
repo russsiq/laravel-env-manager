@@ -22,15 +22,22 @@ class EnvManager implements EnvManagerContract
     protected $filePath;
 
     /**
+     * Коллекция текущих переменных.
+     * @var Collection
+     */
+    protected $variables;
+
+    /**
      * Создать новый экземпляр менеджера файла переменных окружения.
      *
-     * @param  Application  $app
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      */
-	public function __construct(Application $app)
-	{
-		$this->app = $app;
-		$this->filePath = $this->app->environmentFilePath();
-	}
+    public function __construct(Application $app)
+    {
+        $this->app = $app;
+        $this->filePath = $this->app->environmentFilePath();
+        $this->variables = $this->getVariables();
+    }
 
     /**
      * Получить полный путь к файлу окружения.
