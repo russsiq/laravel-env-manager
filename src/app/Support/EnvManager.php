@@ -50,6 +50,16 @@ class EnvManager implements EnvManagerContract
     }
 
     /**
+     * Проверить физическое существование файла окружения.
+     *
+     * @return bool
+     */
+    public function fileExists(): bool
+    {
+        return File::isFile($this->filePath());
+    }
+
+    /**
      * Сгенерировать случайный ключ для приложения.
      * По мотивам: `\Illuminate\Foundation\Console\KeyGenerateCommand`.
      *
