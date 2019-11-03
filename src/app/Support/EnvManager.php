@@ -2,7 +2,10 @@
 
 namespace Russsiq\EnvManager\Support;
 
+use Illuminate\Encryption\Encrypter;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 
 use Russsiq\EnvManager\Support\Contracts\EnvManagerContract;
 
