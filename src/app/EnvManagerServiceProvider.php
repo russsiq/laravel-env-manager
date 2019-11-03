@@ -2,9 +2,9 @@
 
 namespace Russsiq\EnvManager;
 
-use Russsiq\EnvManager\Support\EnvManager;
-
 use Illuminate\Support\ServiceProvider;
+
+use Russsiq\EnvManager\Support\EnvManager;
 
 class EnvManagerServiceProvider extends ServiceProvider
 {
