@@ -2,6 +2,7 @@
 
 namespace Russsiq\EnvManager;
 
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider;
 
 use Russsiq\EnvManager\Support\EnvManager;
@@ -32,8 +33,8 @@ class EnvManagerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('env-manager', function ($app) {
-            return new EnvManager();
+        $this->app->singleton('env-manager', function (Container $app) {
+            return new EnvManager($app);
         });
     }
 
