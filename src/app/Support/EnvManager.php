@@ -140,6 +140,24 @@ class EnvManager implements EnvManagerContract
     }
 
     /**
+     * Записать данные в файл.
+     *
+     * @return bool
+     *
+     * @throws RuntimeException
+     */
+    protected function saveData(array $data): bool
+    {
+        $result = File::put($this->filePath(), $data, true);
+
+        if (is_int($result)) {
+            return true;
+        }
+
+        throw new RuntimeException('Unable to write the environment file.');
+    }
+
+    /**
      * Получить содержимое файла окружения.
      *
      * @return Collection
