@@ -44,7 +44,7 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Сгенерировать случайный ключ для приложения.
-     * По мотивам: `Illuminate\Foundation\Console\KeyGenerateCommand`.
+     * По мотивам: `\Illuminate\Foundation\Console\KeyGenerateCommand`.
      *
      * @return string
      */
