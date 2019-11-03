@@ -16,6 +16,12 @@ class EnvManager implements EnvManagerContract
     protected $app;
 
     /**
+     * Полный путь к файлу окружения.
+     * @var string
+     */
+    protected $filePath;
+
+    /**
      * Создать новый экземпляр менеджера файла переменных окружения.
      *
      * @param  Application  $app
@@ -23,7 +29,18 @@ class EnvManager implements EnvManagerContract
 	public function __construct(Application $app)
 	{
 		$this->app = $app;
+        $this->filePath = $this->app->environmentFilePath();
 	}
+
+    /**
+     * Получить полный путь к файлу окружения.
+     *
+     * @return string
+     */
+    public function filePath(): string
+    {
+        return $this->filePath;
+    }
 
     /**
      * Сгенерировать случайный ключ для приложения.
