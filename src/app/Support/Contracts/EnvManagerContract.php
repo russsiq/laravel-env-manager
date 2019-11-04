@@ -32,6 +32,7 @@ interface EnvManagerContract
      *
      * @param  string      $name    Имя переменной.
      * @param  mixed       $default Значение по умолчанию.
+     *
      * @return string|null
      */
     public function get(string $name, $default = null);

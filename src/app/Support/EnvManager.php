@@ -81,6 +81,7 @@ class EnvManager implements EnvManagerContract
      *
      * @param  string $name    Имя переменной.
      * @param  mixed  $default Значение по умолчанию.
+     * 
      * @return string
      */
     public function get(string $name, $default = null)
