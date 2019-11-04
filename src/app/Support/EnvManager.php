@@ -2,14 +2,14 @@
 
 namespace Russsiq\EnvManager\Support;
 
-use RuntimeException;
-
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 
 use Russsiq\EnvManager\Support\Contracts\EnvManagerContract;
+use Russsiq\EnvManager\Support\Exceptions\UnableToRead;
+use Russsiq\EnvManager\Support\Exceptions\UnableToWrite;
 
 class EnvManager implements EnvManagerContract
 {
@@ -81,7 +81,7 @@ class EnvManager implements EnvManagerContract
      *
      * @param  string $name    Имя переменной.
      * @param  mixed  $default Значение по умолчанию.
-     * 
+     *
      * @return string
      */
     public function get(string $name, $default = null)
@@ -145,7 +145,7 @@ class EnvManager implements EnvManagerContract
      *
      * @return bool
      *
-     * @throws RuntimeException
+     * @throws UnableToWrite
      */
     protected function saveData(array $data): bool
     {
@@ -155,7 +155,7 @@ class EnvManager implements EnvManagerContract
             return true;
         }
 
-        throw new RuntimeException('Unable to write the environment file.');
+        throw new UnableToWrite($this->filePath());
     }
 
     /**
@@ -173,7 +173,7 @@ class EnvManager implements EnvManagerContract
      *
      * @return array
      *
-     * @throws RuntimeException
+     * @throws UnableToRead
      */
     protected function getContent(): array
     {
@@ -183,7 +183,7 @@ class EnvManager implements EnvManagerContract
             return $result;
         }
 
-        throw new RuntimeException('Unable to read the environment file.');
+        throw new UnableToRead($this->filePath());
     }
 
     /**
