@@ -163,9 +163,11 @@ class EnvManager implements EnvManagerContract
     /**
      * Создать файл окружения.
      *
+     * @param  string $filePath Полный путь к исходному файлу.
+     *
      * @return self
      */
-    public function create(): EnvManagerContract
+    public function newFromPath(string $filePath): EnvManagerContract
     {
         //
     }

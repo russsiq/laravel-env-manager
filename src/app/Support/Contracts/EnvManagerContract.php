@@ -66,7 +66,9 @@ interface EnvManagerContract
     /**
      * Создать файл окружения.
      *
+     * @param  string $filePath Полный путь к исходному файлу.
+     *
      * @return self
      */
-    public function create(): self;
+    public function newFromPath(string $filePath): self;
 }
