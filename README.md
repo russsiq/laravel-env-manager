@@ -85,6 +85,8 @@ EnvManager::someMethod(example $someParam);
 ##### `newFromPath(string $filePath, bool $withAppKey = false): self`
 Создать файл окружения путем копирования содержимого файла по указанному полному пути. Полная перезагрузка переменных окружения. Если параметр `$withAppKey` указан как `true`, то будет сгенерирован новый ключ приложения `APP_KEY`.
 
+#### Пример использования
+
 ```php
 use EnvManager;
 
