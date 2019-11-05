@@ -70,7 +70,7 @@ interface EnvManagerContract
      *
      * @param  string  $filePath   Полный путь к исходному файлу.
      * @param  boolean $withAppKey Создать новый ключ приложения.
-     * 
+     *
      * @return self
      */
     public function newFromPath(string $filePath, bool $withAppKey = false): self;
