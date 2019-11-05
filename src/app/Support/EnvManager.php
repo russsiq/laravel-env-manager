@@ -165,11 +165,12 @@ class EnvManager implements EnvManagerContract
      * содержимого файла по указанному полному пути.
      * @NB Полная перезагрузка переменных окружения.
      *
-     * @param  string $filePath Полный путь к исходному файлу.
-     *
+     * @param  string  $filePath   Полный путь к исходному файлу.
+     * @param  boolean $withAppKey Создать новый ключ приложения.
+     * 
      * @return self
      */
-    public function newFromPath(string $filePath): EnvManagerContract
+    public function newFromPath(string $filePath, bool $withAppKey = false): EnvManagerContract
     {
         $this->filePath = $filePath;
         $this->variables = $this->getVariables();
