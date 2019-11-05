@@ -38,7 +38,7 @@
 
 Все публичные методы менеджера доступны через фасад `EnvManager`:
 
-```
+```php
 EnvManager::someMethod($someParam);
 ```
 
