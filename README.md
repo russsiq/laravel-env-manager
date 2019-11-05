@@ -82,8 +82,31 @@ EnvManager::someMethod(example $someParam);
 Сохранить файл окружения.
 
 <a name="method-newFromPath"></a>
-##### `newFromPath(string $filePath, bool $withAppKey = false)`
+##### `newFromPath(string $filePath, bool $withAppKey = false): self`
 Создать файл окружения путем копирования содержимого файла по указанному полному пути. Полная перезагрузка переменных окружения. Если параметр `$withAppKey` указан как `true`, то будет сгенерирован новый ключ приложения `APP_KEY`.
+
+```php
+use EnvManager;
+
+// Если файл не существует.
+if (!EnvManager::fileExists()) {
+    // Создаем новый файл из образца.
+    EnvManager::newFromPath(base_path('.env.example'), true)
+        // Устанавливаем необходимые значения.
+        ->setMany([
+            'APP_NAME' => 'Example site',
+            'APP_LOCALE' => 'ru',
+            'APP_URL' => url('/'),
+            'MAIL_FROM_ADDRESS' => 'from@example.com',
+            'MAIL_FROM_NAME' => 'Example',
+        ])
+        // Сохраняем новый файл в корне как `.env`.
+        ->save();
+}
+
+// Распечатаем для примера
+dump(EnvManager::get('APP_NAME')); // -> `Example site`
+```
 
 ### Удаление пакета из вашего проекта на Laravel
 ```console
