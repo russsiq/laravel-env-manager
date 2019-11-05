@@ -161,7 +161,9 @@ class EnvManager implements EnvManagerContract
     }
 
     /**
-     * Создать файл окружения.
+     * Создать файл окружения путем копирования
+     * содержимого файла по указанному полному пути.
+     * @NB Полная перезагрузка переменных окружения.
      *
      * @param  string $filePath Полный путь к исходному файлу.
      *
@@ -169,7 +171,10 @@ class EnvManager implements EnvManagerContract
      */
     public function newFromPath(string $filePath): EnvManagerContract
     {
-        //
+        $this->filePath = $filePath;
+        $this->variables = $this->getVariables();
+
+        return $this;
     }
 
     /**
