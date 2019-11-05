@@ -5,7 +5,6 @@ namespace Russsiq\EnvManager\Support;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\File;
 
 use Russsiq\EnvManager\Support\Contracts\EnvManagerContract;
 use Russsiq\EnvManager\Support\Exceptions\NothingToSave;
@@ -62,7 +61,7 @@ class EnvManager implements EnvManagerContract
      */
     public function fileExists(): bool
     {
-        return File::isFile($this->filePath());
+        return file_exists($this->filePath());
     }
 
     /**
@@ -179,7 +178,7 @@ class EnvManager implements EnvManagerContract
      */
     protected function saveContent(string $сontent): bool
     {
-        $result = File::put($this->filePath(), $сontent.PHP_EOL, true);
+        $result = file_put_contents($this->filePath(), $сontent.PHP_EOL, true);
 
         if (is_int($result)) {
             return true;
