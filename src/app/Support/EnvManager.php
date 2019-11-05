@@ -61,7 +61,9 @@ class EnvManager implements EnvManagerContract
      */
     public function fileExists(): bool
     {
-        return file_exists($this->filePath());
+        // `is_file` — возвращает TRUE, если файл существует и
+        // является обычным файлом, иначе возвращает FALSE.
+        return is_file($this->filePath());
     }
 
     /**
