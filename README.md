@@ -33,7 +33,7 @@
         ```
 
 ### Удаление пакета из вашего проекта на Laravel
-```console
+```sh
 composer remove russsiq/laravel-env-manager
 ```
 
