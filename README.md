@@ -30,6 +30,7 @@
 
         ```php
         'EnvManager' => Russsiq\EnvManager\Support\Facades\EnvManager::class,
+        ```
 
 ### Удаление пакета из вашего проекта на Laravel
 ```console
