@@ -18,7 +18,7 @@
     composer require russsiq/laravel-env-manager:dev-master
     ```
 
- - **3** В файле `config/app.php` добавьте:
+ - **3** Если в вашем приложении включен отказ от обнаружения пакетов в директиве `dont-discover` в разделе `extra` файла `composer.json`, то необходимо самостоятельно добавить в файле `config/app.php`:
 
     - **3.1** Провайдер услуг в раздел `providers`:
 
