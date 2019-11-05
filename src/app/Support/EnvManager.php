@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 
 use Russsiq\EnvManager\Support\Contracts\EnvManagerContract;
+use Russsiq\EnvManager\Support\Exceptions\NothingToSave;
 use Russsiq\EnvManager\Support\Exceptions\UnableToRead;
 use Russsiq\EnvManager\Support\Exceptions\UnableToWrite;
 
@@ -124,6 +125,8 @@ class EnvManager implements EnvManagerContract
      * Сохранить файл окружения.
      *
      * @return mixed
+     *
+     * @throws NothingToSave
      */
     public function save(): bool
     {
