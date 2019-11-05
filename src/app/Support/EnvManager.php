@@ -127,10 +127,36 @@ class EnvManager implements EnvManagerContract
      * @return mixed
      *
      * @throws NothingToSave При попытке сохранить пустую коллекцию.
+     *
+     * @see https://laravel.com/docs/5.8/upgrade#environment-variable-parsing
+     * @see https://www.php.net/manual/ru/function.parse-ini-file.php#refsect1-function.parse-ini-file-notes
      */
     public function save(): bool
     {
-        //
+        // Все имена переменных окружения имеют синтаксис: `SOME_VAR`.
+        $collection = $this->variables->filter(function ($value, $key) {
+            return str_contains($key, ['_']) and $key === mb_strtoupper($key, 'UTF-8');
+        });
+
+        if ($collection->isNotEmpty()) {
+            $content = $collection->transform(function ($value, $key) {
+                    // Если значение не пустое.
+                    if ($value) {
+                        // Если значение содержит прочие символы, кроме букв и цифр,
+                        // оно должно заключаться в двойные кавычки.
+                        $value = preg_match('/^[a-zA-Z0-9]+$/', $value) ? $value : "\"$value\"";
+                    }
+
+                    return $key.'='.$value;
+                })
+                ->values()
+                ->sort()
+                ->implode(PHP_EOL);
+
+            return $this->saveContent($content);
+        }
+
+        throw new NothingToSave($this->filePath());
     }
 
     /**
