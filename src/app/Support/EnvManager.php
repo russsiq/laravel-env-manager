@@ -146,13 +146,14 @@ class EnvManager implements EnvManagerContract
     /**
      * Записать данные в файл.
      *
+     * @param  string $сontent Строка для записи
      * @return bool
      *
      * @throws UnableToWrite
      */
-    protected function saveData(array $data): bool
+    protected function saveContent(string $сontent): bool
     {
-        $result = File::put($this->filePath(), $data, true);
+        $result = File::put($this->filePath(), $сontent.PHP_EOL, true);
 
         if (is_int($result)) {
             return true;
