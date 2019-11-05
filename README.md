@@ -44,14 +44,46 @@ EnvManager::someMethod(example $someParam);
 
 Список доступных публичных методов:
 
-Полный синтаксис метода с типом возвращаемых данных | Список допустимых параметров | Описание
---------------------------------------------------- | ---------------------------- | --------
-`filePath(): string` |  | Получить полный путь к файлу окружения.
-`fileExists(): bool` |  | Проверить физическое существование файла окружения.
-`has(string $name): bool` | `$name`: имя переменной | Проверить существование значения для указанной переменной окружения.
-`get(string $name, $default = null)` | `$name`: имя переменной<br>`$default`: значение по умолчанию | Проверить существование значения для указанной переменной окружения.
-`set(string $name, $value): self` | `$name`: имя переменной<br>`$value`: значение по умолчанию | Установить значение для переменной окружения.
-`setMany(array $data): self` | `$data`: массив переменных | Установить значения для переменных окружения.
+ - [filePath](#method-filePath)
+ - [fileExists](#method-fileExists)
+ - [has](#method-has)
+ - [get](#method-get)
+ - [set](#method-set)
+ - [setMany](#method-setMany)
+ - [save](#method-save)
+ - [newFromPath](#method-newFromPath)
+
+<a name="method-filePath"></a>
+##### `filePath(): string`
+Получить полный путь к файлу окружения.
+
+<a name="method-fileExists"></a>
+##### `fileExists(): bool`
+Проверить физическое существование файла окружения.
+
+<a name="method-has"></a>
+##### `has(string $name): bool`
+Проверить существование значения для указанной переменной окружения.
+
+<a name="method-get"></a>
+##### `get(string $name, $default = null)`
+Получить значение для указанной переменной окружения.
+
+<a name="method-set"></a>
+##### `set(string $name, $value): self`
+Установить значение для переменной окружения.
+
+<a name="method-setMany"></a>
+##### `setMany(array $data): self`
+Установить значения для переменных окружения.
+
+<a name="method-save"></a>
+##### `save(): bool`
+Сохранить файл окружения.
+
+<a name="method-newFromPath"></a>
+##### `newFromPath(string $filePath): self`
+Создать файл окружения путем копирования содержимого файла по указанному полному пути. Полная перезагрузка переменных окружения.
 
 ### Удаление пакета из вашего проекта на Laravel
 ```console
