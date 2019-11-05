@@ -32,8 +32,25 @@
         'EnvManager' => Russsiq\EnvManager\Support\Facades\EnvManager::class,
         ```
 
+### Использование
+
+#### Методы
+
+Все публичные методы менеджера доступны через фасад `EnvManager`:
+
+```
+EnvManager::someMethod($someParam);
+```
+
+Список доступных публичных методов:
+
+Метод | Список параметров | Описание | Возвращаемые значения
+----- | ----------------- | -------- | ---------------------
+`filePath` |  | Получить полный путь к файлу окружения. | `string`
+`fileExists` |  | Проверить физическое существование файла окружения. | `boolean`
+
 ### Удаление пакета из вашего проекта на Laravel
-```sh
+```console
 composer remove russsiq/laravel-env-manager
 ```
 
