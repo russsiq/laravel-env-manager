@@ -45,7 +45,7 @@ class EnvManager implements EnvManagerContract
     }
 
     /**
-     * Получить полный путь к файлу окружения.
+     * Получить полный путь к текущему файлу окружения.
      *
      * @return string
      */
@@ -55,7 +55,7 @@ class EnvManager implements EnvManagerContract
     }
 
     /**
-     * Проверить физическое существование файла окружения.
+     * Проверить физическое существование текущего файла окружения.
      *
      * @return bool
      */

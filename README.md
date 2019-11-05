@@ -55,11 +55,11 @@ EnvManager::someMethod(example $someParam);
 
 <a name="method-filePath"></a>
 ##### `filePath(): string`
-Получить полный путь к файлу окружения.
+Получить полный путь к текущему файлу окружения.
 
 <a name="method-fileExists"></a>
 ##### `fileExists(): bool`
-Проверить физическое существование файла окружения.
+Проверить физическое существование текущего файла окружения.
 
 <a name="method-has"></a>
 ##### `has(string $name): bool`

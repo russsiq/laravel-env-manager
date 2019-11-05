@@ -5,14 +5,14 @@ namespace Russsiq\EnvManager\Support\Contracts;
 interface EnvManagerContract
 {
     /**
-     * Получить полный путь к файлу окружения.
+     * Получить полный путь к текущему файлу окружения.
      *
      * @return string
      */
     public function filePath(): string;
 
     /**
-     * Проверить физическое существование файла окружения.
+     * Проверить физическое существование текущего файла окружения.
      *
      * @return bool
      */
