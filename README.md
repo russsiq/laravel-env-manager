@@ -91,8 +91,10 @@ EnvManager::someMethod(example $someParam);
 use EnvManager;
 
 // Если файл не существует.
-if (!EnvManager::fileExists()) {
-    // Создаем новый файл из образца.
+if (! EnvManager::fileExists()) {
+
+    // Создаем новый файл из образца,
+    // попутно генерируя ключ для приложения.
     EnvManager::newFromPath(base_path('.env.example'), true)
         // Устанавливаем необходимые значения.
         ->setMany([
@@ -104,6 +106,7 @@ if (!EnvManager::fileExists()) {
         ])
         // Сохраняем новый файл в корне как `.env`.
         ->save();
+
 }
 
 // Распечатаем для примера
