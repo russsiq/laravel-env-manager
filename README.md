@@ -30,13 +30,6 @@
 
         ```php
         'EnvManager' => Russsiq\EnvManager\Support\Facades\EnvManager::class,
-        ```
-
- - **4** Для публикации (копирования) файла настроек воспользуйтесь командной строкой
-
-    ```console
-    php artisan vendor:publish --provider="Russsiq\EnvManager\EnvManagerServiceProvider"
-    ```
 
 ### Удаление пакета из вашего проекта на Laravel
 ```console
