@@ -126,7 +126,7 @@ class EnvManager implements EnvManagerContract
      *
      * @return mixed
      *
-     * @throws NothingToSave
+     * @throws NothingToSave При попытке сохранить пустую коллекцию.
      */
     public function save(): bool
     {
@@ -149,7 +149,7 @@ class EnvManager implements EnvManagerContract
      * @param  string $сontent Строка для записи
      * @return bool
      *
-     * @throws UnableToWrite
+     * @throws UnableToWrite При ошибках записи файла.
      */
     protected function saveContent(string $сontent): bool
     {
@@ -177,7 +177,7 @@ class EnvManager implements EnvManagerContract
      *
      * @return array
      *
-     * @throws UnableToRead
+     * @throws UnableToRead При ошибках чтения файла.
      */
     protected function getContent(): array
     {
