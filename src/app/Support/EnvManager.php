@@ -181,6 +181,7 @@ class EnvManager implements EnvManagerContract
      */
     protected function getContent(): array
     {
+        // В случае ошибки синтаксиса, данная функция вернет FALSE, а не пустой массив.
         $result = parse_ini_file($this->filePath(), false, INI_SCANNER_RAW);
 
         if (is_array($result)) {
