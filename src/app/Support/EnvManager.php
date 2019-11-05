@@ -94,12 +94,12 @@ class EnvManager implements EnvManagerContract
     /**
      * Установить значение для переменной окружения.
      *
-     * @param string      $name  Имя переменной.
-     * @param string|null $value Значение переменной.
+     * @param string    $name  Имя переменной.
+     * @param mixed     $value Значение переменной.
      *
      * @return self
      */
-    public function set(string $name, $value = null): EnvManagerContract
+    public function set(string $name, $value): EnvManagerContract
     {
         $this->variables->put($name, $value);
 
