@@ -188,6 +188,10 @@ class EnvManager implements EnvManagerContract
      */
     protected function saveContent(string $сontent): bool
     {
+        // Перед сохранением содержимого файла
+        // переключаемся на корневой файл.
+        $this->filePath = $this->app->environmentFilePath();
+
         $result = file_put_contents($this->filePath(), $сontent.PHP_EOL, true);
 
         if (is_int($result)) {
