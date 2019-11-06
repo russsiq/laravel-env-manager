@@ -45,7 +45,7 @@ class EnvManager implements EnvManagerContract
     }
 
     /**
-     * Получить полный путь к текущему файлу окружения.
+     * Получить полный путь к файлу окружения.
      *
      * @return string
      */
@@ -55,7 +55,7 @@ class EnvManager implements EnvManagerContract
     }
 
     /**
-     * Проверить физическое существование текущего файла окружения.
+     * Проверить физическое существование файла окружения.
      *
      * @return bool
      */
@@ -174,6 +174,10 @@ class EnvManager implements EnvManagerContract
     {
         $this->filePath = $filePath;
         $this->variables = $this->getVariables();
+
+        if ($withAppKey) {
+            $this->set('APP_KEY', $this->generateRandomKey());
+        }
 
         return $this;
     }
