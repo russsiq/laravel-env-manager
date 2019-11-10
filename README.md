@@ -116,6 +116,7 @@ dump(EnvManager::get('APP_NAME')); // -> `Example site`
 ```
 
 ### Удаление пакета из вашего проекта на Laravel
+
 ```console
 composer remove russsiq/laravel-env-manager
 ```
