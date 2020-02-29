@@ -1,10 +1,11 @@
 {
     "name": "russsiq/laravel-env-manager",
     "description": "Менеджер файла переменных окружения Laravel 6.x.",
+    "keywords": ["laravel", "environment file", "manager"],
     "homepage": "https://github.com/russsiq/laravel-env-manager",
     "type": "library",
+
     "license": "MIT",
-    "keywords": ["laravel", "environment file", "manager"],
     "authors": [{
         "name": "Рустам Гимранов",
         "email": "rustam_gimranov@mail.ru",
@@ -16,8 +17,8 @@
         "url": "https://github.com/russsiq/laravel-env-manager"
     }],
     "require": {
-        "illuminate/support": "6.*",
-        "php": ">=7.2.0"
+        "php": ">=7.2.0",
+        "illuminate/support": "6.*"
     },
     "require-dev": {},
     "autoload": {
