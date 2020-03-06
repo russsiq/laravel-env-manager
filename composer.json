@@ -12,10 +12,6 @@
         "homepage": "https://github.com/russsiq",
         "role": "Developer"
     }],
-    "repositories": [{
-        "type": "vcs",
-        "url": "https://github.com/russsiq/laravel-env-manager"
-    }],
     "require": {
         "php": ">=7.2.0",
         "illuminate/support": "6.*"
