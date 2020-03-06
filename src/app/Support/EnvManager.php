@@ -17,6 +17,15 @@ use Russsiq\EnvManager\Exceptions\UnableToWrite;
 class EnvManager implements EnvManagerContract
 {
     /**
+     * Регулярка для проверки имени ключа перед сохранением.
+     * Ключ должен начинаться с буквы; кроме букв и цифр
+     * может содержать, как правило, нижнее подчеркивание.
+     * > Сохранение строк комментариев не допускается.
+     * @const string
+     */
+    const REGEX_VALID_KEY = '/\A[A-Z]{1}[A-Z0-9\_]+\z/';
+
+    /**
      * Экземпляр приложения.
      * Контейнер не подошел.
      * @var Application
@@ -127,9 +136,9 @@ class EnvManager implements EnvManagerContract
      */
     public function save(): bool
     {
-        // Все имена переменных окружения должны иметь синтаксис: `SOME_VAR`.
         $content = $this->variables->filter(function ($value, $key) {
-                return str_contains($key, ['_']) and $key === mb_strtoupper($key, 'UTF-8');
+                // Отфильтруем пары с невалидными ключами.
+                return preg_match(self::REGEX_VALID_KEY, $key);
             })
             ->transform(function ($value, $key) {
                 // Если значение не пустое.
