@@ -44,7 +44,7 @@ class EnvManager implements EnvManagerContract
     ) {
         $this->app = $app;
         $this->filePath = $this->app->environmentFilePath();
-        $this->variables = $this->getVariables();
+        $this->variables = $this->loadVariables();
     }
 
     /**
@@ -161,7 +161,7 @@ class EnvManager implements EnvManagerContract
     public function newFromPath(string $filePath, bool $withAppKey = false): EnvManagerContract
     {
         $this->filePath = $filePath;
-        $this->variables = $this->getVariables();
+        $this->variables = $this->loadVariables();
 
         return $withAppKey ? $this->set('APP_KEY', $this->generateRandomKey()) : $this;
     }
@@ -185,7 +185,7 @@ class EnvManager implements EnvManagerContract
      * Получить содержимое файла окружения.
      * @return Collection
      */
-    protected function getVariables(): Collection
+    protected function loadVariables(): Collection
     {
         return collect($this->fileExists() ? $this->getContent() : []);
     }
