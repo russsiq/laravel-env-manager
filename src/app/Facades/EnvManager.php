@@ -1,7 +1,8 @@
 <?php
 
-namespace Russsiq\EnvManager\Support\Facades;
+namespace Russsiq\EnvManager\Facades;
 
+// Сторонние зависимости.
 use Illuminate\Support\Facades\Facade;
 
 /**
