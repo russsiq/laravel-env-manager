@@ -32,7 +32,7 @@
                 "Russsiq\\EnvManager\\EnvManagerServiceProvider"
             ],
             "aliases": {
-                "EnvManager": "Russsiq\\EnvManager\\Support\\Facades\\EnvManager"
+                "EnvManager": "Russsiq\\EnvManager\\Facades\\EnvManager"
             }
         }
     },

@@ -6,10 +6,10 @@ use Illuminate\Encryption\Encrypter;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
 
-use Russsiq\EnvManager\Support\Contracts\EnvManagerContract;
-use Russsiq\EnvManager\Support\Exceptions\NothingToSave;
-use Russsiq\EnvManager\Support\Exceptions\UnableToRead;
-use Russsiq\EnvManager\Support\Exceptions\UnableToWrite;
+use Russsiq\EnvManager\Contracts\EnvManagerContract;
+use Russsiq\EnvManager\Exceptions\NothingToSave;
+use Russsiq\EnvManager\Exceptions\UnableToRead;
+use Russsiq\EnvManager\Exceptions\UnableToWrite;
 
 class EnvManager implements EnvManagerContract
 {
