@@ -2,20 +2,23 @@
 
 namespace Russsiq\EnvManager\Support;
 
+// Сторонние зависимости.
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
-
 use Russsiq\EnvManager\Contracts\EnvManagerContract;
 use Russsiq\EnvManager\Exceptions\NothingToSave;
 use Russsiq\EnvManager\Exceptions\UnableToRead;
 use Russsiq\EnvManager\Exceptions\UnableToWrite;
 
+/**
+ * Менеджер файла переменных окружения.
+ */
 class EnvManager implements EnvManagerContract
 {
     /**
      * Экземпляр приложения.
-     *
+     * Контейнер не подошел.
      * @var Application
      */
     protected $app;
@@ -33,12 +36,12 @@ class EnvManager implements EnvManagerContract
     protected $variables;
 
     /**
-     * Создать новый экземпляр менеджера файла переменных окружения.
-     *
+     * Создать новый экземпляр Менеджера файла переменных окружения.
      * @param  Application  $app
      */
-    public function __construct(Application $app)
-    {
+    public function __construct(
+        Application $app
+    ) {
         $this->app = $app;
         $this->filePath = $this->app->environmentFilePath();
         $this->variables = $this->getVariables();
@@ -46,7 +49,6 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Получить полный путь к текущему файлу окружения.
-     *
      * @return string
      */
     public function filePath(): string
@@ -56,7 +58,6 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Проверить физическое существование текущего файла окружения.
-     *
      * @return bool
      */
     public function fileExists(): bool
@@ -68,9 +69,7 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Проверить существование значения для указанной переменной окружения.
-     *
-     * @param string $name Имя переменной.
-     *
+     * @param  string  $name  Имя переменной.
      * @return bool
      */
     public function has(string $name): bool
@@ -80,23 +79,19 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Получить значение для указанной переменной окружения.
-     *
-     * @param  string $name    Имя переменной.
-     * @param  mixed  $default Значение по умолчанию.
-     *
-     * @return string
+     * @param  string  $name  Имя переменной.
+     * @param  mixed  $default  Значение по умолчанию.
+     * @return string|null
      */
-    public function get(string $name, $default = null)
+    public function get(string $name, $default = null): ?string
     {
         return $this->variables->get($name, $default);
     }
 
     /**
      * Установить значение для переменной окружения.
-     *
-     * @param string    $name  Имя переменной.
-     * @param mixed     $value Значение переменной.
-     *
+     * @param  string  $name  Имя переменной.
+     * @param  mixed  $value  Значение переменной.
      * @return self
      */
     public function set(string $name, $value): EnvManagerContract
@@ -108,9 +103,7 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Установить значения для переменных окружения.
-     *
-     * @param array $data  Массив из имен и значений.
-     *
+     * @param  array  $data  Массив из имен и значений.
      * @return self
      */
     public function setMany(array $data): EnvManagerContract
@@ -124,17 +117,19 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Сохранить файл окружения.
+     * @return bool
      *
-     * @return mixed
-     *
-     * @throws NothingToSave При попытке сохранить пустую коллекцию.
+     * @throws NothingToSave  При попытке сохранить пустую коллекцию.
      *
      * @see https://laravel.com/docs/5.8/upgrade#environment-variable-parsing
      * @see https://www.php.net/manual/ru/function.parse-ini-file.php#refsect1-function.parse-ini-file-notes
+     *
+     * @TODO  В качесте значения может быть только строка.
+     *        Если нельзя привести к строке, то отфильтровываем это значение.
      */
     public function save(): bool
     {
-        // Все имена переменных окружения имеют синтаксис: `SOME_VAR`.
+        // Все имена переменных окружения должны иметь синтаксис: `SOME_VAR`.
         $collection = $this->variables->filter(function ($value, $key) {
             return str_contains($key, ['_']) and $key === mb_strtoupper($key, 'UTF-8');
         });
@@ -163,12 +158,11 @@ class EnvManager implements EnvManagerContract
     /**
      * Создать файл окружения путем копирования
      * содержимого файла по указанному полному пути.
-     * @NB Полная перезагрузка переменных окружения.
-     *
-     * @param  string  $filePath   Полный путь к исходному файлу.
-     * @param  boolean $withAppKey Создать новый ключ приложения.
-     *
+     * @param  string  $filePath  Полный путь к исходному файлу.
+     * @param  boolean  $withAppKey  Создать новый ключ приложения.
      * @return self
+     *
+     * @NB  Полная перезагрузка переменных окружения.
      */
     public function newFromPath(string $filePath, bool $withAppKey = false): EnvManagerContract
     {
@@ -184,11 +178,10 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Записать данные в файл.
-     *
-     * @param  string $сontent Строка для записи
+     * @param  string  $сontent  Строка для записи
      * @return bool
      *
-     * @throws UnableToWrite При ошибках записи файла.
+     * @throws UnableToWrite  При ошибках записи файла.
      */
     protected function saveContent(string $сontent): bool
     {
@@ -207,7 +200,6 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Получить содержимое файла окружения.
-     *
      * @return Collection
      */
     protected function getVariables(): Collection
@@ -217,10 +209,9 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Получить содержимое файла окружения.
-     *
      * @return array
      *
-     * @throws UnableToRead При ошибках чтения файла.
+     * @throws UnableToRead  При ошибках чтения файла.
      */
     protected function getContent(): array
     {
@@ -236,9 +227,9 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Сгенерировать случайный ключ для приложения.
-     * По мотивам: `\Illuminate\Foundation\Console\KeyGenerateCommand`.
-     *
      * @return string
+     *
+     * @see \Illuminate\Foundation\Console\KeyGenerateCommand
      */
     protected function generateRandomKey(): string
     {

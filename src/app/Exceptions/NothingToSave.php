@@ -2,28 +2,30 @@
 
 namespace Russsiq\EnvManager\Exceptions;
 
+// Исключения.
 use RuntimeException;
 
+/**
+ * При попытке сохранить пустую коллекцию.
+ * То есть все невалидные значения должны быть отфильтрованы.
+ */
 class NothingToSave extends RuntimeException
 {
     /**
      * Полный путь к файлу.
-     *
      * @var string
      */
     protected $filePath;
 
     /**
      * Сообщение Исключения.
-     *
      * @var string
      */
     protected $message = 'The data is not available for saving to a file.';
 
     /**
      * Создать новый экземпляр Исключения.
-     *
-     * @param string $filePath Полный путь к файлу.
+     * @param  string  $filePath  Полный путь к файлу.
      */
     public function __construct(string $filePath)
     {
@@ -34,7 +36,6 @@ class NothingToSave extends RuntimeException
 
     /**
      * Получить полный путь к файлу.
-     *
      * @return string
      */
     public function filePath(): string
