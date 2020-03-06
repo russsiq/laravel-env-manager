@@ -1,6 +1,6 @@
 <?php
 
-namespace Russsiq\EnvManager\Support\Contracts;
+namespace Russsiq\EnvManager\Contracts;
 
 interface EnvManagerContract
 {
