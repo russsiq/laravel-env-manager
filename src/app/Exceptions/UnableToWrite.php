@@ -1,10 +1,10 @@
 <?php
 
-namespace Russsiq\EnvManager\Support\Exceptions;
+namespace Russsiq\EnvManager\Exceptions;
 
 use RuntimeException;
 
-class NothingToSave extends RuntimeException
+class UnableToWrite extends RuntimeException
 {
     /**
      * Полный путь к файлу.
@@ -18,7 +18,7 @@ class NothingToSave extends RuntimeException
      *
      * @var string
      */
-    protected $message = 'The data is not available for saving to a file.';
+    protected $message = 'Unable to write the environment file.';
 
     /**
      * Создать новый экземпляр Исключения.

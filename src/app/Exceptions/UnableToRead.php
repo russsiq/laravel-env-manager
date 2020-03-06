@@ -1,10 +1,10 @@
 <?php
 
-namespace Russsiq\EnvManager\Support\Exceptions;
+namespace Russsiq\EnvManager\Exceptions;
 
 use RuntimeException;
 
-class UnableToWrite extends RuntimeException
+class UnableToRead extends RuntimeException
 {
     /**
      * Полный путь к файлу.
@@ -18,7 +18,7 @@ class UnableToWrite extends RuntimeException
      *
      * @var string
      */
-    protected $message = 'Unable to write the environment file.';
+    protected $message = 'Unable to read the environment file.';
 
     /**
      * Создать новый экземпляр Исключения.
