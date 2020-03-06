@@ -2,46 +2,19 @@
 
 namespace Russsiq\EnvManager;
 
-use Illuminate\Contracts\Container\Container;
+// Сторонние зависимости.
 use Illuminate\Support\ServiceProvider;
-
 use Russsiq\EnvManager\Support\EnvManager;
 
 class EnvManagerServiceProvider extends ServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
+     * Все синглтоны (одиночки) контейнера,
+     * которые должны быть зарегистрированы.
+     * @var array
      */
-    protected $defer = false;
+    public $singletons = [
+        'env-manager' => EnvManager::class,
 
-    /**
-     * Bootstrap the application events.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-    }
-
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->app->singleton('env-manager', function (Container $app) {
-            return new EnvManager($app);
-        });
-    }
-
-    public function provides()
-    {
-        return [
-            'env-manager',
-        ];
-    }
+    ];
 }
