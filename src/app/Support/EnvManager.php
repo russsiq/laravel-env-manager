@@ -26,6 +26,14 @@ class EnvManager implements EnvManagerContract
     const REGEX_VALID_KEY = '/\A[A-Z]{1}[A-Z0-9\_]+\z/';
 
     /**
+     * Регулярка допустимых значений.
+     * Если значение в файле содержит прочие символы,
+     * кроме букв и цифр, оно должно заключаться в двойные кавычки.
+     * @const string
+     */
+    const REGEX_ACCEPTABLE_VALUE = '/\A[a-zA-Z0-9]+\z/';
+
+    /**
      * Экземпляр приложения.
      * Контейнер не подошел.
      * @var Application
@@ -130,22 +138,21 @@ class EnvManager implements EnvManagerContract
      *
      * @see https://laravel.com/docs/5.8/upgrade#environment-variable-parsing
      * @see https://www.php.net/manual/ru/function.parse-ini-file.php#refsect1-function.parse-ini-file-notes
-     *
-     * @TODO  В качесте значения может быть только строка.
-     *        Если нельзя привести к строке, то отфильтровываем это значение.
      */
     public function save(): bool
     {
-        $content = $this->variables->filter(function ($value, $key) {
+        $content = $this->variables->mapWithKeys(function ($value, $key) {
+                // Обрежем пустоты, переносы, табуляцию.
+                return [trim($key) => trim($value)];
+            })
+            ->filter(function ($value, $key) {
                 // Отфильтруем пары с невалидными ключами.
-                return preg_match(self::REGEX_VALID_KEY, $key);
+                return 1 === preg_match(self::REGEX_VALID_KEY, $key);
             })
             ->transform(function ($value, $key) {
-                // Если значение не пустое.
-                if ($value) {
-                    // Если значение содержит прочие символы, кроме букв и цифр,
-                    // оно должно заключаться в двойные кавычки.
-                    $value = preg_match('/^[a-zA-Z0-9]+$/', $value) ? $value : "\"$value\"";
+                // Если значение не пустое и оно не допустимо.
+                if ($value && 1 !== preg_match(self::REGEX_ACCEPTABLE_VALUE, $value)) {
+                    $value = "\"".addcslashes($value, '"')."\"";
                 }
 
                 return $key.'='.$value;
