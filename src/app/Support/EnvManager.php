@@ -119,8 +119,6 @@ class EnvManager implements EnvManagerContract
      * Сохранить файл окружения.
      * @return bool
      *
-     * @throws NothingToSave  При попытке сохранить пустую коллекцию.
-     *
      * @see https://laravel.com/docs/5.8/upgrade#environment-variable-parsing
      * @see https://www.php.net/manual/ru/function.parse-ini-file.php#refsect1-function.parse-ini-file-notes
      *
@@ -130,29 +128,25 @@ class EnvManager implements EnvManagerContract
     public function save(): bool
     {
         // Все имена переменных окружения должны иметь синтаксис: `SOME_VAR`.
-        $collection = $this->variables->filter(function ($value, $key) {
-            return str_contains($key, ['_']) and $key === mb_strtoupper($key, 'UTF-8');
-        });
+        $content = $this->variables->filter(function ($value, $key) {
+                return str_contains($key, ['_']) and $key === mb_strtoupper($key, 'UTF-8');
+            })
+            ->transform(function ($value, $key) {
+                // Если значение не пустое.
+                if ($value) {
+                    // Если значение содержит прочие символы, кроме букв и цифр,
+                    // оно должно заключаться в двойные кавычки.
+                    $value = preg_match('/^[a-zA-Z0-9]+$/', $value) ? $value : "\"$value\"";
+                }
 
-        if ($collection->isNotEmpty()) {
-            $content = $collection->transform(function ($value, $key) {
-                    // Если значение не пустое.
-                    if ($value) {
-                        // Если значение содержит прочие символы, кроме букв и цифр,
-                        // оно должно заключаться в двойные кавычки.
-                        $value = preg_match('/^[a-zA-Z0-9]+$/', $value) ? $value : "\"$value\"";
-                    }
+                return $key.'='.$value;
+            })
+            ->values()
+            ->sort()
+            ->implode(PHP_EOL);
 
-                    return $key.'='.$value;
-                })
-                ->values()
-                ->sort()
-                ->implode(PHP_EOL);
-
-            return $this->saveContent($content);
-        }
-
-        throw new NothingToSave($this->filePath());
+        return $this->assertContentIsNotEmpty($content)
+            ?: $this->saveContent($content);
     }
 
     /**
@@ -169,33 +163,22 @@ class EnvManager implements EnvManagerContract
         $this->filePath = $filePath;
         $this->variables = $this->getVariables();
 
-        if ($withAppKey) {
-            $this->set('APP_KEY', $this->generateRandomKey());
-        }
-
-        return $this;
+        return $withAppKey ? $this->set('APP_KEY', $this->generateRandomKey()) : $this;
     }
 
     /**
      * Записать данные в файл.
      * @param  string  $сontent  Строка для записи
      * @return bool
-     *
-     * @throws UnableToWrite  При ошибках записи файла.
      */
     protected function saveContent(string $сontent): bool
     {
-        // Перед сохранением содержимого файла
-        // переключаемся на корневой файл.
+        // Перед сохранением содержимого файла переключаемся на корневой файл.
         $this->filePath = $this->app->environmentFilePath();
 
-        $result = file_put_contents($this->filePath(), $сontent.PHP_EOL, true);
+        $result = file_put_contents($this->filePath(), $сontent.PHP_EOL, LOCK_EX);
 
-        if (is_int($result)) {
-            return true;
-        }
-
-        throw new UnableToWrite($this->filePath());
+        return $this->assertFileWriteIsSuccessful($result) ?: true;
     }
 
     /**
@@ -210,19 +193,12 @@ class EnvManager implements EnvManagerContract
     /**
      * Получить содержимое файла окружения.
      * @return array
-     *
-     * @throws UnableToRead  При ошибках чтения файла.
      */
     protected function getContent(): array
     {
-        // В случае ошибки синтаксиса, данная функция вернет FALSE, а не пустой массив.
         $result = parse_ini_file($this->filePath(), false, INI_SCANNER_RAW);
 
-        if (is_array($result)) {
-            return $result;
-        }
-
-        throw new UnableToRead($this->filePath());
+        return $this->assertFileParseIsSuccessful($result) ?: $result;
     }
 
     /**
@@ -236,5 +212,54 @@ class EnvManager implements EnvManagerContract
         return 'base64:'.base64_encode(
             Encrypter::generateKey($this->app['config']['app.cipher'])
         );
+    }
+
+    /**
+     * Определить, что предоставленное содержимое не пустая строка.
+     * @param  string  $content
+     * @return void
+     *
+     * @throws NothingToSave
+     */
+    protected function assertContentIsNotEmpty($content): void
+    {
+        if (! is_string($content) || '' === $content) {
+            throw new NothingToSave($this->filePath());
+        }
+    }
+
+    /**
+     * Подтвердить успешность записи содержимого в файл
+     * с использованием функции `file_put_contents`, которая
+     * возвращает количество записанных байт в файл,
+     * или FALSE в случае ошибки.
+     * @param  mixed  $result
+     * @return void
+     *
+     * @throws NothingToSave
+     */
+    protected function assertFileWriteIsSuccessful($result): void
+    {
+        if (false === $result) {
+            throw new UnableToWrite($this->filePath());
+        }
+    }
+
+    /**
+     * Подтвердить успешность парсинга содержимого файла
+     * с использованием функции `parse_ini_file`, которая
+     * в случае успеха возвращает настройки
+     * в виде ассоциативного массива (array),
+     * а в случае ошибки возвращает FALSE.
+     * @param  mixed  $result
+     * @return void
+     *
+     * @throws NothingToSave
+     */
+    protected function assertFileParseIsSuccessful($result): void
+    {
+        if (false === $result) {
+            throw new UnableToRead($this->filePath());
+        }
     }
 }
