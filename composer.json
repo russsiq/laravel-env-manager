@@ -1,6 +1,6 @@
 {
     "name": "russsiq/laravel-env-manager",
-    "description": "Менеджер файла переменных окружения Laravel 6.x.",
+    "description": "Менеджер файла переменных окружения Laravel 7.x.",
     "keywords": ["laravel", "environment file", "manager"],
     "homepage": "https://github.com/russsiq/laravel-env-manager",
     "type": "library",
