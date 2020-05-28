@@ -34,6 +34,10 @@
             }
         }
     },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-win7": "vendor\\bin\\phpunit"
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
