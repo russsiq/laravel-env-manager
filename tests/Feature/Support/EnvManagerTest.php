@@ -134,6 +134,22 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
+     * @cover ::resetFilePath
+     * @depends testSetFilePath
+     *
+     * Подтвердить успешность сброса полного пути
+     * текущего файла окружения.
+     * @return void
+     */
+    public function testResetFilePath(): void
+    {
+        $this->manager->resetFilePath();
+
+        $this->assertEquals($this->environmentFilePath, $this->manager->filePath());
+    }
+
+    /**
+     * @test
      * @cover ::fileExists
      *
      * Подтвердить физическое присутствие файла окружения.
