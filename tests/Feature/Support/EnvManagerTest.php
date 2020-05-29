@@ -160,7 +160,7 @@ class EnvManagerTest extends TestCase
 
         // Перед проверкой существования файла
         // создадим его.
-        file_put_contents($filePath, 'dummy content', LOCK_EX);
+        file_put_contents($filePath, $this->simpleTestingStringableContent(), LOCK_EX);
 
         $this->assertFileExists($filePath);
         $this->assertTrue($this->manager->fileExists());
@@ -181,5 +181,38 @@ class EnvManagerTest extends TestCase
     public function testFileNotExists(): void
     {
         $this->assertFalse($this->manager->fileExists());
+    }
+
+    /**
+     * [simpleTestingContent description]
+     * @return array
+     */
+    protected function simpleTestingArrayContent(): array
+    {
+        return [
+            'APP_NAME' => 'Example',
+            'APP_LOCALE' => 'ru',
+            'APP_URL' => 'https://example.com',
+            'MAIL_FROM_ADDRESS' => 'from@example.com',
+            'MAIL_FROM_NAME' => 'Hercules',
+
+        ];
+    }
+
+    /**
+     * [simpleTestingContent description]
+     * @return string
+     */
+    protected function simpleTestingStringableContent(): string
+    {
+        $data = $this->simpleTestingArrayContent();
+
+        return implode(PHP_EOL, array_map(
+            function (string $key, string $value): string {
+                return "{$key}={$value}";
+            },
+            array_keys($data),
+            $data
+        ));
     }
 }
