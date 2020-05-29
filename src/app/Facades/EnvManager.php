@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static string filePath();
+ * @method static \Russsiq\EnvManager\Contracts\EnvManagerContract setFilePath(string $filePath);
+ * @method static \Russsiq\EnvManager\Contracts\EnvManagerContract resetFilePath();
  * @method static bool fileExists();
  * @method static bool has(string $name);
  * @method static string|null get(string $name, $default = null);
