@@ -287,6 +287,31 @@ class EnvManagerTest extends TestCase
     }
 
     /**
+     * @test
+     * @cover ::save
+     *
+     * [testSave description]
+     * @return void
+     */
+    public function testSave()
+    {
+        $this->assertFalse($this->manager->fileExists());
+
+        // Перед проверкой переменных файла создадим его.
+        file_put_contents($this->environmentFilePath, $this->simpleTestingStringableContent(), LOCK_EX);
+
+        $this->manager = new EnvManager($this->environmentFilePath, $this->cipher);
+        $this->assertInstanceOf(EnvManagerContract::class, $this->manager);
+        $this->assertSame('Example', $this->manager->get('APP_NAME'));
+
+        $this->assertTrue($this->manager->save());
+        $this->assertTrue($this->manager->fileExists());
+
+        // По окончании проверки Удалим временный файл.
+        unlink($this->manager->filePath());
+    }
+
+    /**
      * [simpleTestingContent description]
      * @return array
      */
