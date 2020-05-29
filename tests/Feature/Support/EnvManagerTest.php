@@ -17,6 +17,45 @@ use Russsiq\EnvManager\Contracts\EnvManagerContract;
  */
 class EnvManagerTest extends TestCase
 {
+    private const DUMMY_DIR = __DIR__.'/tmp';
+    private const DUMMY_CIPHER = 'AES-256-CBC';
+
+    /**
+     * Этот метод вызывается перед запуском
+     * первого теста этого класса тестирования.
+     * @return void
+     */
+    public static function setUpBeforeClass(): void
+    {
+        mkdir(self::DUMMY_DIR);
+    }
+
+    /**
+     * Этот метод вызывается перед каждым тестом.
+     * @return void
+     */
+    protected function setUp(): void
+    {
+    }
+
+    /**
+     * Этот метод вызывается после каждого теста.
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+    }
+
+    /**
+     * Этот метод вызывается после запуска
+     * последнего теста этого класса тестирования.
+     * @return void
+     */
+    public static function tearDownAfterClass(): void
+    {
+        rmdir(self::DUMMY_DIR);
+    }
+
     public function testExample(): void
     {
         $this->assertTrue(true);
