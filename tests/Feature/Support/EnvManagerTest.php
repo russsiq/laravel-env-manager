@@ -312,6 +312,35 @@ class EnvManagerTest extends TestCase
     }
 
     /**
+     * @test
+     * @cover ::newFromPath
+     *
+     * [testNewFromPath description]
+     * @return void
+     */
+    public function testNewFromPath()
+    {
+        $this->assertFalse($this->manager->fileExists());
+
+        $filePath = $this->environmentFilePath.'.example';
+
+        // Перед проверкой переменных файла создадим его.
+        file_put_contents($filePath, $this->simpleTestingStringableContent(), LOCK_EX);
+
+        $this->manager = new EnvManager($this->environmentFilePath, $this->cipher);
+        $this->assertInstanceOf(EnvManagerContract::class, $this->manager);
+        $this->assertNull($this->manager->get('APP_NAME'));
+
+        $this->manager->newFromPath($filePath);
+
+        $this->assertSame($filePath, $this->manager->filePath());
+        $this->assertSame('Example', $this->manager->get('APP_NAME'));
+
+        // По окончании проверки Удалим временный файл.
+        unlink($this->manager->filePath());
+    }
+
+    /**
      * [simpleTestingContent description]
      * @return array
      */
