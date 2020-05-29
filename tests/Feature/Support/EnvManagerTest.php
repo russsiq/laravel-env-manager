@@ -21,6 +21,18 @@ class EnvManagerTest extends TestCase
     private const DUMMY_CIPHER = 'AES-256-CBC';
 
     /**
+     * Полный путь к файлу окружения приложения.
+     * @var string
+     */
+    protected $environmentFilePath;
+
+    /**
+     * Алгоритм, используемый для шифрования.
+     * @var string
+     */
+    protected $cipher;
+
+    /**
      * Этот метод вызывается перед запуском
      * первого теста этого класса тестирования.
      * @return void
@@ -36,6 +48,8 @@ class EnvManagerTest extends TestCase
      */
     protected function setUp(): void
     {
+        $this->environmentFilePath = self::DUMMY_DIR.'/.env';
+        $this->cipher = self::DUMMY_CIPHER;
     }
 
     /**
@@ -58,11 +72,12 @@ class EnvManagerTest extends TestCase
 
     /**
      * Экземпляр менеджера успешно создан.
+     * Имитация работы поставщика службы.
      * @return EnvManagerContract
      */
     public function testSuccessfullyInitiated(): EnvManagerContract
     {
-        $manager = new EnvManager(self::DUMMY_DIR, self::DUMMY_CIPHER);
+        $manager = new EnvManager($this->environmentFilePath, $this->cipher);
 
         $this->assertInstanceOf(EnvManagerContract::class, $manager);
 
