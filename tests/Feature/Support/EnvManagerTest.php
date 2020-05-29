@@ -269,6 +269,24 @@ class EnvManagerTest extends TestCase
     }
 
     /**
+     * @test
+     * @cover ::setMany
+     *
+     * [testSet description]
+     * @return void
+     */
+    public function testSetMany()
+    {
+        $this->manager->setMany([
+            'key1' => 'value1',
+            'key2' => 'value2',
+        ]);
+
+        $this->assertSame('value1', $this->manager->get('key1'));
+        $this->assertSame('value2', $this->manager->get('key2'));
+    }
+
+    /**
      * [simpleTestingContent description]
      * @return array
      */
