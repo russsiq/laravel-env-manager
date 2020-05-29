@@ -203,6 +203,18 @@ class EnvManagerTest extends TestCase
     }
 
     /**
+     * @test
+     * @cover ::has
+     *
+     * [testHasIsFalse description]
+     * @return void
+     */
+    public function testHasIsFalse()
+    {
+        $this->assertFalse($this->manager->has('not-exist'));
+    }
+
+    /**
      * [simpleTestingContent description]
      * @return array
      */
