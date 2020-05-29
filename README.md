@@ -133,7 +133,17 @@ composer remove russsiq/laravel-env-manager
 
 ### Тестирование
 
-Неа, не слышал.
+Для запуска тестов используйте команду:
+
+```console
+composer run-script test
+```
+
+Для запуска тестов под Windows 7 используйте команду:
+
+```console
+composer run-script test-win7
+```
 
 ### Лицензия
 
