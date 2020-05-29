@@ -33,6 +33,12 @@ class EnvManagerTest extends TestCase
     private $cipher;
 
     /**
+     * Экземпляр менеджера.
+     * @var EnvManager
+     */
+    private $manager;
+
+    /**
      * Этот метод вызывается перед запуском
      * первого теста этого класса тестирования.
      * @return void
@@ -52,8 +58,10 @@ class EnvManagerTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->environmentFilePath = self::DUMMY_DIR.'/.env';
-        $this->cipher = self::DUMMY_CIPHER;
+        $this->manager = new EnvManager(
+            $this->environmentFilePath = self::DUMMY_DIR.'/.env',
+            $this->cipher = self::DUMMY_CIPHER
+        );
     }
 
     /**
@@ -79,48 +87,50 @@ class EnvManagerTest extends TestCase
     }
 
     /**
+     * @test
+     * @cover ::__construct
+     *
      * Экземпляр менеджера успешно создан.
-     * Имитация работы поставщика службы.
-     * @return EnvManagerContract
+     * @return void
      */
-    public function testSuccessfullyInitiated(): EnvManagerContract
+    public function testSuccessfullyInitiated(): void
     {
-        $manager = new EnvManager($this->environmentFilePath, $this->cipher);
-
-        $this->assertInstanceOf(EnvManagerContract::class, $manager);
-
-        return $manager;
+        $this->assertInstanceOf(EnvManagerContract::class, $this->manager);
     }
 
     /**
      * @test
      * @cover ::fileExists
-     * @depends testSuccessfullyInitiated
      *
      * Подтвердить физическое присутствие файла окружения.
-     * @param  EnvManagerContract  $manager
      * @return void
      */
-    public function testFileExists(EnvManagerContract $manager): void
+    public function testFileExists(): void
     {
-        file_put_contents($this->environmentFilePath, 'dummy content', LOCK_EX);
+        $filePath = $this->manager->filePath();
 
-        $this->assertTrue($manager->fileExists());
+        // Перед проверкой существования файла
+        // создадим его.
+        file_put_contents($filePath, 'dummy content', LOCK_EX);
 
-        unlink($this->environmentFilePath);
+        $this->assertFileExists($filePath);
+        $this->assertTrue($this->manager->fileExists());
+        $this->assertEquals($filePath, $this->environmentFilePath);
+
+        // Удалим временный файл, что необходимо для зависимого теста.
+        unlink($this->manager->filePath());
     }
 
     /**
      * @test
      * @cover ::fileExists
-     * @depends testSuccessfullyInitiated
+     * @depends testFileExists
      *
      * Подтвердить физическое отсутствие файла окружения.
-     * @param  EnvManagerContract  $manager
      * @return void
      */
-    public function testFileNotExists(EnvManagerContract $manager): void
+    public function testFileNotExists(): void
     {
-        $this->assertFalse($manager->fileExists());
+        $this->assertFalse($this->manager->fileExists());
     }
 }
