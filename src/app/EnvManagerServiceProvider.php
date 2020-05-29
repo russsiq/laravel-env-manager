@@ -9,12 +9,13 @@ use Russsiq\EnvManager\Support\EnvManager;
 class EnvManagerServiceProvider extends ServiceProvider
 {
     /**
-     * Все синглтоны (одиночки) контейнера,
-     * которые должны быть зарегистрированы.
-     * @var array
+     * Регистрация Менеджера файла переменных окружения.
+     * @return void
      */
-    public $singletons = [
-        'env-manager' => EnvManager::class,
-
-    ];
+    public function register()
+    {
+        $this->app->singleton('env-manager', function ($app) {
+            return new EnvManager($app);
+        });
+    }
 }
