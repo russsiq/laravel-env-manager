@@ -91,4 +91,36 @@ class EnvManagerTest extends TestCase
 
         return $manager;
     }
+
+    /**
+     * @test
+     * @cover ::fileExists
+     * @depends testSuccessfullyInitiated
+     *
+     * Подтвердить физическое присутствие файла окружения.
+     * @param  EnvManagerContract  $manager
+     * @return void
+     */
+    public function testFileExists(EnvManagerContract $manager): void
+    {
+        file_put_contents($this->environmentFilePath, 'dummy content', LOCK_EX);
+
+        $this->assertTrue($manager->fileExists());
+
+        unlink($this->environmentFilePath);
+    }
+
+    /**
+     * @test
+     * @cover ::fileExists
+     * @depends testSuccessfullyInitiated
+     *
+     * Подтвердить физическое отсутствие файла окружения.
+     * @param  EnvManagerContract  $manager
+     * @return void
+     */
+    public function testFileNotExists(EnvManagerContract $manager): void
+    {
+        $this->assertFalse($manager->fileExists());
+    }
 }
