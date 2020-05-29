@@ -158,8 +158,7 @@ class EnvManagerTest extends TestCase
     {
         $filePath = $this->manager->filePath();
 
-        // Перед проверкой существования файла
-        // создадим его.
+        // Перед проверкой существования файла создадим его.
         file_put_contents($filePath, $this->simpleTestingStringableContent(), LOCK_EX);
 
         $this->assertFileExists($filePath);
