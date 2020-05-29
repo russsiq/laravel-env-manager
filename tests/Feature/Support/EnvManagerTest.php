@@ -183,6 +183,26 @@ class EnvManagerTest extends TestCase
     }
 
     /**
+     * @test
+     * @cover ::has
+     *
+     * [testHasIsTrue description]
+     * @return void
+     */
+    public function testHasIsTrue(): void
+    {
+        // Перед проверкой переменных файла создадим его.
+        file_put_contents($this->environmentFilePath, $this->simpleTestingStringableContent(), LOCK_EX);
+
+        $this->manager = new EnvManager($this->environmentFilePath, $this->cipher);
+        $this->assertInstanceOf(EnvManagerContract::class, $this->manager);
+        $this->assertTrue($this->manager->has('APP_NAME'));
+
+        // По окончании проверки Удалим временный файл.
+        unlink($this->manager->filePath());
+    }
+
+    /**
      * [simpleTestingContent description]
      * @return array
      */
