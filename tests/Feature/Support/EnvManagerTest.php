@@ -215,6 +215,46 @@ class EnvManagerTest extends TestCase
     }
 
     /**
+     * @test
+     * @cover ::get
+     *
+     * [testGet description]
+     * @return void
+     */
+    public function testGet(): void
+    {
+        // Перед проверкой переменных файла создадим его.
+        file_put_contents($this->environmentFilePath, $this->simpleTestingStringableContent(), LOCK_EX);
+
+        $this->manager = new EnvManager($this->environmentFilePath, $this->cipher);
+        $this->assertInstanceOf(EnvManagerContract::class, $this->manager);
+        $this->assertSame('Example', $this->manager->get('APP_NAME'));
+
+        // По окончании проверки Удалим временный файл.
+        unlink($this->manager->filePath());
+    }
+
+    /**
+     * @test
+     * @cover ::get
+     *
+     * [testGetWithDefault description]
+     * @return void
+     */
+    public function testGetWithDefault(): void
+    {
+        // Перед проверкой переменных файла создадим его.
+        file_put_contents($this->environmentFilePath, $this->simpleTestingStringableContent(), LOCK_EX);
+
+        $this->manager = new EnvManager($this->environmentFilePath, $this->cipher);
+        $this->assertInstanceOf(EnvManagerContract::class, $this->manager);
+        $this->assertSame('default', $this->manager->get('not-exist', 'default'));
+
+        // По окончании проверки Удалим временный файл.
+        unlink($this->manager->filePath());
+    }
+
+    /**
      * [simpleTestingContent description]
      * @return array
      */
