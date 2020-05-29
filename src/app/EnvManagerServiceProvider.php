@@ -15,7 +15,10 @@ class EnvManagerServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('env-manager', function ($app) {
-            return new EnvManager($app);
+            return new EnvManager(
+                $app->environmentFilePath(),
+                $app->config->get('app.cipher')
+            );
         });
     }
 }

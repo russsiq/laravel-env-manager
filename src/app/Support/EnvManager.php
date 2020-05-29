@@ -4,7 +4,6 @@ namespace Russsiq\EnvManager\Support;
 
 // Сторонние зависимости.
 use Illuminate\Encryption\Encrypter;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
 use Russsiq\EnvManager\Contracts\EnvManagerContract;
 use Russsiq\EnvManager\Exceptions\NothingToSave;
@@ -34,14 +33,19 @@ class EnvManager implements EnvManagerContract
     const REGEX_ACCEPTABLE_VALUE = '/\A[a-zA-Z0-9]+\z/';
 
     /**
-     * Экземпляр приложения.
-     * Контейнер не подошел.
-     * @var Application
+     * Полный путь к файлу окружения приложения.
+     * @var string
      */
-    protected $app;
+    protected $environmentFilePath;
 
     /**
-     * Полный путь к файлу окружения.
+     * Алгоритм, используемый для шифрования.
+     * @var string
+     */
+    protected $cipher;
+
+    /**
+     * Полный путь к текущему файлу окружения.
      * @var string
      */
     protected $filePath;
@@ -54,13 +58,17 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Создать новый экземпляр Менеджера файла переменных окружения.
-     * @param  Application  $app
+     * @param string $environmentFilePath
+     * @param string $cipher
      */
     public function __construct(
-        Application $app
+        string $environmentFilePath,
+        string $cipher
     ) {
-        $this->app = $app;
-        $this->filePath = $this->app->environmentFilePath();
+        $this->environmentFilePath = $environmentFilePath;
+        $this->cipher = $cipher;
+
+        $this->filePath = $environmentFilePath;
         $this->variables = $this->loadVariables();
     }
 
@@ -190,7 +198,7 @@ class EnvManager implements EnvManagerContract
     protected function saveContent(string $сontent): bool
     {
         // Перед сохранением содержимого файла переключаемся на корневой файл.
-        $this->filePath = $this->app->environmentFilePath();
+        $this->filePath = $this->environmentFilePath;
 
         $result = file_put_contents($this->filePath(), $сontent.PHP_EOL, LOCK_EX);
 
@@ -226,7 +234,7 @@ class EnvManager implements EnvManagerContract
     protected function generateRandomKey(): string
     {
         return 'base64:'.base64_encode(
-            Encrypter::generateKey($this->app['config']['app.cipher'])
+            Encrypter::generateKey($this->cipher)
         );
     }
 
