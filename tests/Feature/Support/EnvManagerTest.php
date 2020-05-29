@@ -129,7 +129,6 @@ class EnvManagerTest extends TestCase
         $this->manager->setFilePath($wrongPath);
 
         $this->assertEquals($wrongPath, $this->manager->filePath());
-        $this->assertFalse($this->manager->fileExists());
     }
 
     /**
