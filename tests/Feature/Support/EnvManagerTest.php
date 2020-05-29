@@ -68,9 +68,4 @@ class EnvManagerTest extends TestCase
 
         return $manager;
     }
-
-    public function testExample(): void
-    {
-        $this->assertTrue(true);
-    }
 }
