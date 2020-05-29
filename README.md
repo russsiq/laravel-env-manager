@@ -108,7 +108,7 @@ EnvManager::someMethod(example $someParam);
 #### Пример использования
 
 ```php
-use EnvManager;
+use Russsiq\EnvManager\Facades\EnvManager;
 
 // Если файл не существует.
 if (! EnvManager::fileExists()) {
