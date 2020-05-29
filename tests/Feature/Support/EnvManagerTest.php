@@ -39,7 +39,11 @@ class EnvManagerTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        mkdir(self::DUMMY_DIR);
+        $directory = self::DUMMY_DIR;
+
+        if (!is_dir($directory)) {
+            mkdir($directory);
+        }
     }
 
     /**
@@ -67,7 +71,11 @@ class EnvManagerTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        rmdir(self::DUMMY_DIR);
+        $directory = self::DUMMY_DIR;
+
+        if (is_dir($directory)) {
+            rmdir($directory);
+        }
     }
 
     /**
