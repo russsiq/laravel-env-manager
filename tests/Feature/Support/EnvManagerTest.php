@@ -116,6 +116,24 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
+     * @cover ::setFilePath
+     *
+     * Подтвердить успешность задания полного пути
+     * текущего файла окружения.
+     * @return void
+     */
+    public function testSetFilePath(): void
+    {
+        $wrongPath = 'dummy/path/.env';
+
+        $this->manager->setFilePath($wrongPath);
+
+        $this->assertEquals($wrongPath, $this->manager->filePath());
+        $this->assertFalse($this->manager->fileExists());
+    }
+
+    /**
+     * @test
      * @cover ::fileExists
      *
      * Подтвердить физическое присутствие файла окружения.
