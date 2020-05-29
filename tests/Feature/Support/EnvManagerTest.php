@@ -56,6 +56,19 @@ class EnvManagerTest extends TestCase
         rmdir(self::DUMMY_DIR);
     }
 
+    /**
+     * Экземпляр менеджера успешно создан.
+     * @return EnvManagerContract
+     */
+    public function testSuccessfullyInitiated(): EnvManagerContract
+    {
+        $manager = new EnvManager(self::DUMMY_DIR, self::DUMMY_CIPHER);
+
+        $this->assertInstanceOf(EnvManagerContract::class, $manager);
+
+        return $manager;
+    }
+
     public function testExample(): void
     {
         $this->assertTrue(true);
