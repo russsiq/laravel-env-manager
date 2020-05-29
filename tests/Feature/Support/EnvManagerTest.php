@@ -255,6 +255,20 @@ class EnvManagerTest extends TestCase
     }
 
     /**
+     * @test
+     * @cover ::set
+     *
+     * [testSet description]
+     * @return void
+     */
+    public function testSet()
+    {
+        $this->manager->set('key', 'value');
+
+        $this->assertSame('value', $this->manager->get('key'));
+    }
+
+    /**
      * [simpleTestingContent description]
      * @return array
      */
