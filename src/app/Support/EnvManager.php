@@ -68,7 +68,7 @@ class EnvManager implements EnvManagerContract
         $this->environmentFilePath = $environmentFilePath;
         $this->cipher = $cipher;
 
-        $this->resetFilePath()
+        $this->variables = $this->resetFilePath()
             ->loadVariables();
     }
 
@@ -207,7 +207,7 @@ class EnvManager implements EnvManagerContract
      */
     public function newFromPath(string $filePath, bool $withAppKey = false): EnvManagerContract
     {
-        $this->setFilePath($filePath)
+        $this->variables = $this->setFilePath($filePath)
             ->loadVariables();
 
         return $withAppKey ? $this->set('APP_KEY', $this->generateRandomKey()) : $this;
