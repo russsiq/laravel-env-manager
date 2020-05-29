@@ -68,8 +68,8 @@ class EnvManager implements EnvManagerContract
         $this->environmentFilePath = $environmentFilePath;
         $this->cipher = $cipher;
 
-        $this->filePath = $environmentFilePath;
-        $this->variables = $this->loadVariables();
+        $this->resetFilePath()
+            ->loadVariables();
     }
 
     /**
@@ -79,6 +79,29 @@ class EnvManager implements EnvManagerContract
     public function filePath(): string
     {
         return $this->filePath;
+    }
+
+    /**
+     * Установить полный путь к текущему файлу окружения.
+     * @param  string  $filePath
+     * @return self
+     */
+    public function setFilePath(string $filePath): EnvManagerContract
+    {
+        $this->filePath = $filePath;
+
+        return $this;
+    }
+
+    /**
+     * Сбросить полный путь к текущему файлу окружения.
+     * @return self
+     */
+    public function resetFilePath(): EnvManagerContract
+    {
+        $this->filePath = $this->environmentFilePath;
+
+        return $this;
     }
 
     /**
@@ -184,8 +207,8 @@ class EnvManager implements EnvManagerContract
      */
     public function newFromPath(string $filePath, bool $withAppKey = false): EnvManagerContract
     {
-        $this->filePath = $filePath;
-        $this->variables = $this->loadVariables();
+        $this->setFilePath($filePath)
+            ->loadVariables();
 
         return $withAppKey ? $this->set('APP_KEY', $this->generateRandomKey()) : $this;
     }
@@ -198,7 +221,7 @@ class EnvManager implements EnvManagerContract
     protected function saveContent(string $сontent): bool
     {
         // Перед сохранением содержимого файла переключаемся на корневой файл.
-        $this->filePath = $this->environmentFilePath;
+        $this->resetFilePath();
 
         $result = file_put_contents($this->filePath(), $сontent.PHP_EOL, LOCK_EX);
 

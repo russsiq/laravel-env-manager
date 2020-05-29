@@ -15,6 +15,19 @@ interface EnvManagerContract
     public function filePath(): string;
 
     /**
+     * Установить полный путь к текущему файлу окружения.
+     * @param  string  $filePath
+     * @return self
+     */
+    public function setFilePath(string $filePath): self;
+
+    /**
+     * Сбросить полный путь к текущему файлу окружения.
+     * @return self
+     */
+    public function resetFilePath(): self;
+
+    /**
      * Проверить физическое существование текущего файла окружения.
      * @return bool
      */

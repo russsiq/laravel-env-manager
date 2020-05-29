@@ -47,6 +47,8 @@ EnvManager::someMethod(example $someParam);
 Список доступных публичных методов:
 
  - [filePath](#method-filePath)
+ - [setFilePath](#method-setFilePath)
+ - [resetFilePath](#method-resetFilePath)
  - [fileExists](#method-fileExists)
  - [has](#method-has)
  - [get](#method-get)
@@ -58,6 +60,14 @@ EnvManager::someMethod(example $someParam);
 <a name="method-filePath"></a>
 ##### `filePath(): string`
 Получить полный путь к текущему файлу окружения.
+
+<a name="method-setFilePath"></a>
+##### `setFilePath(string $filePath): self`
+Установить полный путь к текущему файлу окружения.
+
+<a name="method-resetFilePath"></a>
+##### `resetFilePath(): self`
+Сбросить полный путь к текущему файлу окружения.
 
 <a name="method-fileExists"></a>
 ##### `fileExists(): bool`
