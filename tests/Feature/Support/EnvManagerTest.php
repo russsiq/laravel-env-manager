@@ -100,6 +100,22 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
+     * @cover ::filePath
+     *
+     * Подтвердить актуальность файла окружения.
+     * @return void
+     */
+    public function testFilePath(): void
+    {
+        $filePath = $this->manager->filePath();
+
+        $this->assertIsString($filePath);
+        $this->assertNotEmpty($filePath);
+        $this->assertEquals($this->environmentFilePath, $filePath);
+    }
+
+    /**
+     * @test
      * @cover ::fileExists
      *
      * Подтвердить физическое присутствие файла окружения.
