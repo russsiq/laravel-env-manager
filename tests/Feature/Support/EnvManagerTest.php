@@ -24,13 +24,13 @@ class EnvManagerTest extends TestCase
      * Полный путь к файлу окружения приложения.
      * @var string
      */
-    protected $environmentFilePath;
+    private $environmentFilePath;
 
     /**
      * Алгоритм, используемый для шифрования.
      * @var string
      */
-    protected $cipher;
+    private $cipher;
 
     /**
      * Этот метод вызывается перед запуском
