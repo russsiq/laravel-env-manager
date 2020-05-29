@@ -86,7 +86,7 @@ EnvManager::someMethod(example $someParam);
 Проверить существование значения для указанной переменной окружения.
 
 <a name="method-get"></a>
-##### `get(string $name, $default = null)`
+##### `get(string $name, $default = null): ?string`
 Получить значение для указанной переменной окружения.
 
 <a name="method-set"></a>
