@@ -45,6 +45,11 @@ class EnvManagerTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
+        // Очищаем кеш состояния файлов,
+        // так как тестирование выполняется
+        // на реальной файловой системе.
+        clearstatcache();
+
         $directory = self::DUMMY_DIR;
 
         if (!is_dir($directory)) {
@@ -70,6 +75,10 @@ class EnvManagerTest extends TestCase
      */
     protected function tearDown(): void
     {
+        // Очищаем кеш состояния файлов,
+        // так как тестирование выполняется
+        // на реальной файловой системе.
+        clearstatcache();
     }
 
     /**
