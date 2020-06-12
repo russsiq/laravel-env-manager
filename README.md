@@ -147,6 +147,12 @@ composer run-script test
 composer run-script test-win7
 ```
 
+Для формирования agile-документации, генерируемой в HTML-формате и записываемой в файл [tests/testdox.html](tests/testdox.html), используйте команду:
+
+```console
+composer run-script testdox
+```
+
 ### Удаление пакета
 
 Для удаления пакета из вашего проекта на Laravel используйте команду:
