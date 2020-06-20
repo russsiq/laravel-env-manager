@@ -97,7 +97,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @cover ::__construct
+     * @covers ::__construct
      *
      * Экземпляр менеджера успешно создан.
      * @return void
@@ -109,7 +109,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @cover ::filePath
+     * @covers ::filePath
      *
      * Подтвердить актуальность файла окружения.
      * @return void
@@ -125,7 +125,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @cover ::setFilePath
+     * @covers ::setFilePath
      *
      * Подтвердить успешность задания полного пути
      * текущего файла окружения.
@@ -142,7 +142,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @cover ::resetFilePath
+     * @covers ::resetFilePath
      * @depends testSetFilePath
      *
      * Подтвердить успешность сброса полного пути
@@ -158,7 +158,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @cover ::fileExists
+     * @covers ::fileExists
      *
      * Подтвердить физическое присутствие файла окружения.
      * @return void
@@ -180,7 +180,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @cover ::fileExists
+     * @covers ::fileExists
      * @depends testFileExists
      *
      * Подтвердить физическое отсутствие файла окружения.
@@ -193,7 +193,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @cover ::has
+     * @covers ::has
      *
      * [testHasIsTrue description]
      * @return void
@@ -213,7 +213,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @cover ::has
+     * @covers ::has
      *
      * [testHasIsFalse description]
      * @return void
@@ -225,7 +225,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @cover ::get
+     * @covers ::get
      *
      * [testGet description]
      * @return void
@@ -245,7 +245,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @cover ::get
+     * @covers ::get
      *
      * [testGetWithDefault description]
      * @return void
@@ -265,7 +265,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @cover ::set
+     * @covers ::set
      *
      * [testSet description]
      * @return void
@@ -279,7 +279,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @cover ::setMany
+     * @covers ::setMany
      *
      * [testSet description]
      * @return void
@@ -297,7 +297,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @cover ::save
+     * @covers ::save
      *
      * [testSave description]
      * @return void
@@ -322,7 +322,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @cover ::newFromPath
+     * @covers ::newFromPath
      *
      * [testNewFromPath description]
      * @return void
@@ -351,7 +351,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @cover ::newFromPath
+     * @covers ::newFromPath
      *
      * [testNewFromPathWithAppKey description]
      * @return void
