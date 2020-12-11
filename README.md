@@ -1,4 +1,4 @@
-## Менеджер файла переменных окружения Laravel 7.x.
+## Менеджер файла переменных окружения Laravel 8.x.
 
 Используется только для физического взаимодействия с файлом.
 
@@ -18,14 +18,14 @@
 
     ```json
     "require": {
-        "russsiq/laravel-env-manager": "^0.2"
+        "russsiq/laravel-env-manager": "^0.3"
     }
     ```
 
  - **2** Для подключения в уже созданный проект воспользуйтесь командной строкой:
 
     ```console
-    composer require "russsiq/laravel-env-manager:^0.2"
+    composer require "russsiq/laravel-env-manager:^0.3"
     ```
 
  - **3** Если в вашем приложении включен отказ от обнаружения пакетов в директиве `dont-discover` в разделе `extra` файла `composer.json`, то необходимо самостоятельно добавить в файле `config/app.php`:
