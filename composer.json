@@ -18,7 +18,7 @@
     },
     "require-dev": {
         "illuminate/encryption": "8.*",
-        "phpunit/phpunit": "^9.3"
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
