@@ -2,7 +2,6 @@
 
 namespace Russsiq\EnvManager\Support;
 
-// Сторонние зависимости.
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Support\Collection;
 use Russsiq\EnvManager\Contracts\EnvManagerContract;
@@ -20,6 +19,7 @@ class EnvManager implements EnvManagerContract
      * Ключ должен начинаться с буквы; кроме букв и цифр
      * может содержать, как правило, нижнее подчеркивание.
      * > Сохранение строк комментариев не допускается.
+     *
      * @const string
      */
     const REGEX_VALID_KEY = '/\A[A-Z]{1}[A-Z0-9\_]+\z/';
@@ -28,36 +28,42 @@ class EnvManager implements EnvManagerContract
      * Регулярка допустимых значений.
      * Если значение в файле содержит прочие символы,
      * кроме букв и цифр, оно должно заключаться в двойные кавычки.
+     *
      * @const string
      */
     const REGEX_ACCEPTABLE_VALUE = '/\A[a-zA-Z0-9]+\z/';
 
     /**
      * Полный путь к файлу окружения приложения.
+     *
      * @var string
      */
     protected $environmentFilePath;
 
     /**
      * Алгоритм, используемый для шифрования.
+     *
      * @var string
      */
     protected $cipher;
 
     /**
      * Полный путь к текущему файлу окружения.
+     *
      * @var string
      */
     protected $filePath;
 
     /**
      * Коллекция текущих переменных.
+     *
      * @var Collection
      */
     protected $variables;
 
     /**
      * Создать новый экземпляр Менеджера файла переменных окружения.
+     *
      * @param string $environmentFilePath
      * @param string $cipher
      */
@@ -74,6 +80,7 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Получить полный путь к текущему файлу окружения.
+     *
      * @return string
      */
     public function filePath(): string
@@ -83,7 +90,9 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Установить полный путь к текущему файлу окружения.
+     *
      * @param  string  $filePath
+     *
      * @return self
      */
     public function setFilePath(string $filePath): EnvManagerContract
@@ -95,6 +104,7 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Сбросить полный путь к текущему файлу окружения.
+     *
      * @return self
      */
     public function resetFilePath(): EnvManagerContract
@@ -106,6 +116,7 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Проверить физическое существование текущего файла окружения.
+     *
      * @return bool
      */
     public function fileExists(): bool
@@ -117,7 +128,9 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Проверить существование значения для указанной переменной окружения.
+     *
      * @param  string  $name  Имя переменной.
+     *
      * @return bool
      */
     public function has(string $name): bool
@@ -127,8 +140,10 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Получить значение для указанной переменной окружения.
+     *
      * @param  string  $name  Имя переменной.
      * @param  mixed  $default  Значение по умолчанию.
+     *
      * @return string|null
      */
     public function get(string $name, $default = null): ?string
@@ -138,8 +153,10 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Установить значение для переменной окружения.
+     *
      * @param  string  $name  Имя переменной.
      * @param  mixed  $value  Значение переменной.
+     *
      * @return self
      */
     public function set(string $name, $value): EnvManagerContract
@@ -151,7 +168,9 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Установить значения для переменных окружения.
+     *
      * @param  array  $data  Массив из имен и значений.
+     *
      * @return self
      */
     public function setMany(array $data): EnvManagerContract
@@ -165,6 +184,7 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Сохранить файл окружения.
+     *
      * @return bool
      *
      * @see https://laravel.com/docs/5.8/upgrade#environment-variable-parsing
@@ -173,22 +193,19 @@ class EnvManager implements EnvManagerContract
     public function save(): bool
     {
         $content = $this->variables->mapWithKeys(function ($value, $key) {
-                // Обрежем пустоты, переносы, табуляцию.
-                return [trim($key) => trim($value)];
-            })
-            ->filter(function ($value, $key) {
-                // Отфильтруем пары с невалидными ключами.
-                return 1 === preg_match(self::REGEX_VALID_KEY, $key);
-            })
-            ->transform(function ($value, $key) {
-                // Если значение не пустое и оно не допустимо.
-                if ($value && 1 !== preg_match(self::REGEX_ACCEPTABLE_VALUE, $value)) {
-                    $value = "\"".addcslashes($value, '"')."\"";
-                }
+            // Обрежем пустоты, переносы, табуляцию.
+            return [trim($key) => trim($value)];
+        })->filter(function ($value, $key) {
+            // Отфильтруем пары с невалидными ключами.
+            return 1 === preg_match(self::REGEX_VALID_KEY, $key);
+        })->transform(function ($value, $key) {
+            // Если значение не пустое и оно не допустимо.
+            if ($value && 1 !== preg_match(self::REGEX_ACCEPTABLE_VALUE, $value)) {
+                $value = '"'.addcslashes($value, '"').'"';
+            }
 
-                return $key.'='.$value;
-            })
-            ->values()
+            return $key.'='.$value;
+        })->values()
             ->sort()
             ->implode(PHP_EOL);
 
@@ -199,8 +216,10 @@ class EnvManager implements EnvManagerContract
     /**
      * Создать файл окружения путем копирования
      * содержимого файла по указанному полному пути.
+     *
      * @param  string  $filePath  Полный путь к исходному файлу.
-     * @param  boolean  $withAppKey  Создать новый ключ приложения.
+     * @param  bool  $withAppKey  Создать новый ключ приложения.
+     *
      * @return self
      *
      * @NB  Полная перезагрузка переменных окружения.
@@ -215,7 +234,9 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Записать данные в файл.
+     *
      * @param  string  $сontent  Строка для записи
+     *
      * @return bool
      */
     protected function saveContent(string $сontent): bool
@@ -230,6 +251,7 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Получить содержимое файла окружения.
+     *
      * @return Collection
      */
     protected function loadVariables(): Collection
@@ -239,6 +261,7 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Получить содержимое файла окружения.
+     *
      * @return array
      */
     protected function getContent(): array
@@ -250,6 +273,7 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Сгенерировать случайный ключ для приложения.
+     *
      * @return string
      *
      * @see \Illuminate\Foundation\Console\KeyGenerateCommand
@@ -263,7 +287,9 @@ class EnvManager implements EnvManagerContract
 
     /**
      * Определить, что предоставленное содержимое не пустая строка.
+     *
      * @param  string  $content
+     *
      * @return void
      *
      * @throws NothingToSave
@@ -280,7 +306,9 @@ class EnvManager implements EnvManagerContract
      * с использованием функции `file_put_contents`, которая
      * возвращает количество записанных байт в файл,
      * или FALSE в случае ошибки.
+     *
      * @param  mixed  $result
+     *
      * @return void
      *
      * @throws NothingToSave
@@ -298,7 +326,9 @@ class EnvManager implements EnvManagerContract
      * в случае успеха возвращает настройки
      * в виде ассоциативного массива (array),
      * а в случае ошибки возвращает FALSE.
+     *
      * @param  mixed  $result
+     *
      * @return void
      *
      * @throws NothingToSave

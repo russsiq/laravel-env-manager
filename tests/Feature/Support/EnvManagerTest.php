@@ -1,16 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Tests\Feature\Support;
 
-// Тестируемый класс.
-use Russsiq\EnvManager\Support\EnvManager;
-
-// Базовые расширения PHP.
-
-// Сторонние зависимости.
-use Illuminate\Encryption\Encrypter;
 use PHPUnit\Framework\TestCase;
 use Russsiq\EnvManager\Contracts\EnvManagerContract;
+use Russsiq\EnvManager\Support\EnvManager;
 
 /**
  * @coversDefaultClass \Russsiq\EnvManager\Support\EnvManager
@@ -18,22 +14,26 @@ use Russsiq\EnvManager\Contracts\EnvManagerContract;
 class EnvManagerTest extends TestCase
 {
     private const DUMMY_DIR = __DIR__.'/tmp';
+
     private const DUMMY_CIPHER = 'AES-256-CBC';
 
     /**
      * Полный путь к файлу окружения приложения.
+     *
      * @var string
      */
     private $environmentFilePath;
 
     /**
      * Алгоритм, используемый для шифрования.
+     *
      * @var string
      */
     private $cipher;
 
     /**
      * Экземпляр менеджера.
+     *
      * @var EnvManager
      */
     private $manager;
@@ -41,6 +41,7 @@ class EnvManagerTest extends TestCase
     /**
      * Этот метод вызывается перед запуском
      * первого теста этого класса тестирования.
+     *
      * @return void
      */
     public static function setUpBeforeClass(): void
@@ -52,13 +53,14 @@ class EnvManagerTest extends TestCase
 
         $directory = self::DUMMY_DIR;
 
-        if (!is_dir($directory)) {
+        if (! is_dir($directory)) {
             mkdir($directory);
         }
     }
 
     /**
      * Этот метод вызывается перед каждым тестом.
+     *
      * @return void
      */
     protected function setUp(): void
@@ -71,6 +73,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * Этот метод вызывается после каждого теста.
+     *
      * @return void
      */
     protected function tearDown(): void
@@ -84,6 +87,7 @@ class EnvManagerTest extends TestCase
     /**
      * Этот метод вызывается после запуска
      * последнего теста этого класса тестирования.
+     *
      * @return void
      */
     public static function tearDownAfterClass(): void
@@ -100,6 +104,7 @@ class EnvManagerTest extends TestCase
      * @covers ::__construct
      *
      * Экземпляр менеджера успешно создан.
+     *
      * @return void
      */
     public function testSuccessfullyInitiated(): void
@@ -112,6 +117,7 @@ class EnvManagerTest extends TestCase
      * @covers ::filePath
      *
      * Подтвердить актуальность файла окружения.
+     *
      * @return void
      */
     public function testFilePath(): void
@@ -129,6 +135,7 @@ class EnvManagerTest extends TestCase
      *
      * Подтвердить успешность задания полного пути
      * текущего файла окружения.
+     *
      * @return void
      */
     public function testSetFilePath(): void
@@ -147,6 +154,7 @@ class EnvManagerTest extends TestCase
      *
      * Подтвердить успешность сброса полного пути
      * текущего файла окружения.
+     *
      * @return void
      */
     public function testResetFilePath(): void
@@ -161,6 +169,7 @@ class EnvManagerTest extends TestCase
      * @covers ::fileExists
      *
      * Подтвердить физическое присутствие файла окружения.
+     *
      * @return void
      */
     public function testFileExists(): void
@@ -184,6 +193,7 @@ class EnvManagerTest extends TestCase
      * @depends testFileExists
      *
      * Подтвердить физическое отсутствие файла окружения.
+     *
      * @return void
      */
     public function testFileNotExists(): void
@@ -196,6 +206,7 @@ class EnvManagerTest extends TestCase
      * @covers ::has
      *
      * [testHasIsTrue description]
+     *
      * @return void
      */
     public function testHasIsTrue(): void
@@ -216,9 +227,10 @@ class EnvManagerTest extends TestCase
      * @covers ::has
      *
      * [testHasIsFalse description]
+     *
      * @return void
      */
-    public function testHasIsFalse()
+    public function testHasIsFalse(): void
     {
         $this->assertFalse($this->manager->has('not-exist'));
     }
@@ -228,6 +240,7 @@ class EnvManagerTest extends TestCase
      * @covers ::get
      *
      * [testGet description]
+     *
      * @return void
      */
     public function testGet(): void
@@ -248,6 +261,7 @@ class EnvManagerTest extends TestCase
      * @covers ::get
      *
      * [testGetWithDefault description]
+     *
      * @return void
      */
     public function testGetWithDefault(): void
@@ -268,9 +282,10 @@ class EnvManagerTest extends TestCase
      * @covers ::set
      *
      * [testSet description]
+     *
      * @return void
      */
-    public function testSet()
+    public function testSet(): void
     {
         $this->manager->set('key', 'value');
 
@@ -282,9 +297,10 @@ class EnvManagerTest extends TestCase
      * @covers ::setMany
      *
      * [testSet description]
+     *
      * @return void
      */
-    public function testSetMany()
+    public function testSetMany(): void
     {
         $this->manager->setMany([
             'key1' => 'value1',
@@ -300,9 +316,10 @@ class EnvManagerTest extends TestCase
      * @covers ::save
      *
      * [testSave description]
+     *
      * @return void
      */
-    public function testSave()
+    public function testSave(): void
     {
         $this->assertFalse($this->manager->fileExists());
 
@@ -325,9 +342,10 @@ class EnvManagerTest extends TestCase
      * @covers ::newFromPath
      *
      * [testNewFromPath description]
+     *
      * @return void
      */
-    public function testNewFromPath()
+    public function testNewFromPath(): void
     {
         $this->assertFalse($this->manager->fileExists());
 
@@ -354,9 +372,10 @@ class EnvManagerTest extends TestCase
      * @covers ::newFromPath
      *
      * [testNewFromPathWithAppKey description]
+     *
      * @return void
      */
-    public function testNewFromPathWithAppKey()
+    public function testNewFromPathWithAppKey(): void
     {
         $this->assertFalse($this->manager->fileExists());
 
@@ -379,7 +398,8 @@ class EnvManagerTest extends TestCase
     }
 
     /**
-     * [simpleTestingContent description]
+     * [simpleTestingContent description].
+     *
      * @return array
      */
     protected function simpleTestingArrayContent(): array
@@ -395,7 +415,8 @@ class EnvManagerTest extends TestCase
     }
 
     /**
-     * [simpleTestingContent description]
+     * [simpleTestingContent description].
+     *
      * @return string
      */
     protected function simpleTestingStringableContent(): string

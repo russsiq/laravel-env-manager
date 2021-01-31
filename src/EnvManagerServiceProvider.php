@@ -2,7 +2,6 @@
 
 namespace Russsiq\EnvManager;
 
-// Сторонние зависимости.
 use Illuminate\Support\ServiceProvider;
 use Russsiq\EnvManager\Support\EnvManager;
 
@@ -10,6 +9,7 @@ class EnvManagerServiceProvider extends ServiceProvider
 {
     /**
      * Регистрация Менеджера файла переменных окружения.
+     *
      * @return void
      */
     public function register()

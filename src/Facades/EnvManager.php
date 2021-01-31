@@ -2,7 +2,6 @@
 
 namespace Russsiq\EnvManager\Facades;
 
-// Сторонние зависимости.
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -24,6 +23,7 @@ class EnvManager extends Facade
 {
     /**
      * Получить зарегистрированное имя компонента.
+     *
      * @return string
      */
     protected static function getFacadeAccessor(): string
