@@ -2,7 +2,6 @@
 
 namespace Russsiq\EnvManager\Support;
 
-use Illuminate\Encryption\Encrypter;
 use Illuminate\Support\Collection;
 use Russsiq\EnvManager\Contracts\EnvManagerContract;
 use Russsiq\EnvManager\Exceptions\NothingToSave;
@@ -281,8 +280,19 @@ class EnvManager implements EnvManagerContract
     protected function generateRandomKey(): string
     {
         return 'base64:'.base64_encode(
-            Encrypter::generateKey($this->cipher)
+            $this->generateKey($this->cipher)
         );
+    }
+
+    /**
+     * Create a new encryption key for the given cipher.
+     *
+     * @param  string  $cipher
+     * @return string
+     */
+    protected function generateKey(string $cipher): string
+    {
+        return random_bytes($cipher === 'AES-128-CBC' ? 16 : 32);
     }
 
     /**
