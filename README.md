@@ -157,4 +157,4 @@ composer remove russsiq/laravel-env-manager
 
 ### Лицензия
 
-`laravel-env-manager` – программное обеспечение с открытым исходным кодом, распространяющееся по лицензии [MIT](https://choosealicense.com/licenses/mit/).
+`laravel-env-manager` – программное обеспечение с открытым исходным кодом, распространяющееся по лицензии [MIT](LICENSE).
