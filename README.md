@@ -1,4 +1,4 @@
-## Менеджер файла переменных окружения Laravel 8.x.
+# Менеджер файла переменных окружения Laravel 8.x.
 
 Используется только для физического взаимодействия с файлом.
 
@@ -12,39 +12,31 @@
 1. [Удаление пакета](#Удаление-пакета)
 1. [Лицензия](#Лицензия)
 
-### Подключение
+## Подключение
 
- - **1** Для добавления зависимости в проект на Laravel в файле `composer.json`
+Для добавления зависимости в проект на Laravel, используйте менеджер пакетов Composer:
 
-    ```json
-    "require": {
-        "russsiq/laravel-env-manager": "^0.3"
-    }
-    ```
+```console
+composer require russsiq/laravel-env-manager
+```
 
- - **2** Для подключения в уже созданный проект воспользуйтесь командной строкой:
+Если в вашем приложении включен отказ от обнаружения пакетов в директиве `dont-discover` в разделе `extra` файла `composer.json`, то необходимо самостоятельно добавить следующее:
 
-    ```console
-    composer require "russsiq/laravel-env-manager:^0.3"
-    ```
+- Провайдер услуг в раздел `providers`:
 
- - **3** Если в вашем приложении включен отказ от обнаружения пакетов в директиве `dont-discover` в разделе `extra` файла `composer.json`, то необходимо самостоятельно добавить в файле `config/app.php`:
+```php
+Russsiq\EnvManager\EnvManagerServiceProvider::class,
+```
 
-    - **3.1** Провайдер услуг в раздел `providers`:
+- Псевдоним класса (Facade) в раздел `aliases`:
 
-        ```php
-        Russsiq\EnvManager\EnvManagerServiceProvider::class,
-        ```
+```php
+'EnvManager' => Russsiq\EnvManager\Support\Facades\EnvManager::class,
+```
 
-    - **3.2** Псевдоним класса (Facade) в раздел `aliases`:
+## Использование
 
-        ```php
-        'EnvManager' => Russsiq\EnvManager\Support\Facades\EnvManager::class,
-        ```
-
-### Использование
-
-#### Методы
+### Методы
 
 Все публичные методы менеджера доступны через фасад `EnvManager`:
 
@@ -103,14 +95,14 @@ EnvManager::someMethod(example $someParam);
 Сохранить файл окружения.
 
 <a name="method-newFromPath"></a>
-##### `newFromPath(string $filePath, bool $withAppKey = false): self`
-Создать файл окружения путем копирования содержимого файла по указанному полному пути. Полная перезагрузка переменных окружения. Если параметр `$withAppKey` указан как `true`, то будет сгенерирован новый ключ приложения `APP_KEY`.
+##### `newFromPath(string $filePath): self`
+Создать файл окружения путем копирования содержимого файла по указанному полному пути. Полная перезагрузка переменных окружения.
 
 <a name="method-withNewAppKey"></a>
 ##### `withNewAppKey(): self`
 Создать новый ключ приложения.
 
-#### Пример использования
+### Пример использования
 
 ```php
 use Russsiq\EnvManager\Facades\EnvManager;
@@ -138,7 +130,7 @@ if (! EnvManager::fileExists()) {
 dump(EnvManager::get('APP_NAME')); // -> `Example site`
 ```
 
-### Тестирование
+## Тестирование
 
 Для запуска тестов используйте команду:
 
@@ -152,7 +144,7 @@ composer run-script test
 composer run-script testdox
 ```
 
-### Удаление пакета
+## Удаление пакета
 
 Для удаления пакета из вашего проекта на Laravel используйте команду:
 
@@ -160,6 +152,6 @@ composer run-script testdox
 composer remove russsiq/laravel-env-manager
 ```
 
-### Лицензия
+## Лицензия
 
 `laravel-env-manager` – программное обеспечение с открытым исходным кодом, распространяющееся по лицензии [MIT](LICENSE).
