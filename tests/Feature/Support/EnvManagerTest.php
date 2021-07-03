@@ -369,7 +369,7 @@ class EnvManagerTest extends TestCase
 
     /**
      * @test
-     * @covers ::newFromPath
+     * @covers ::withNewAppKey
      *
      * [testNewFromPathWithAppKey description]
      *
@@ -387,8 +387,10 @@ class EnvManagerTest extends TestCase
         $this->manager = new EnvManager($this->environmentFilePath, $this->cipher);
         $this->assertInstanceOf(EnvManagerContract::class, $this->manager);
         $this->assertNull($this->manager->get('APP_NAME'));
+        $this->assertNull($this->manager->get('APP_KEY'));
 
-        $this->manager->newFromPath($filePath, true);
+        $this->manager->newFromPath($filePath)
+            ->withNewAppKey();
 
         $this->assertSame('Example', $this->manager->get('APP_NAME'));
         $this->assertNotNull($this->manager->get('APP_KEY'));

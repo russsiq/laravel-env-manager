@@ -108,11 +108,17 @@ interface EnvManagerContract
      * содержимого файла по указанному полному пути.
      *
      * @param  string  $filePath  Полный путь к исходному файлу.
-     * @param  bool  $withAppKey  Создать новый ключ приложения.
      *
      * @return self
      *
      * @NB  Полная перезагрузка переменных окружения.
      */
-    public function newFromPath(string $filePath, bool $withAppKey = false): self;
+    public function newFromPath(string $filePath): self;
+
+    /**
+     * Создать новый ключ приложения.
+     *
+     * @return self
+     */
+    public function withNewAppKey(): self;
 }

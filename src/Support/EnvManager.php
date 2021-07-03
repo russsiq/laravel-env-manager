@@ -198,18 +198,25 @@ class EnvManager implements EnvManagerContract
      * содержимого файла по указанному полному пути.
      *
      * @param  string  $filePath  Полный путь к исходному файлу.
-     * @param  bool  $withAppKey  Создать новый ключ приложения.
      *
      * @return self
      *
      * @NB  Полная перезагрузка переменных окружения.
      */
-    public function newFromPath(string $filePath, bool $withAppKey = false): EnvManagerContract
+    public function newFromPath(string $filePath): EnvManagerContract
     {
         $this->variables = $this->setFilePath($filePath)
             ->loadVariables();
 
-        return $withAppKey ? $this->set('APP_KEY', $this->generateRandomKey()) : $this;
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function withNewAppKey(): EnvManagerContract
+    {
+        return $this->set('APP_KEY', $this->generateRandomKey());
     }
 
     /**

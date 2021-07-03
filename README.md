@@ -64,6 +64,7 @@ EnvManager::someMethod(example $someParam);
  - [setMany](#method-setMany)
  - [save](#method-save)
  - [newFromPath](#method-newFromPath)
+ - [withNewAppKey](#method-withNewAppKey)
 
 <a name="method-filePath"></a>
 ##### `filePath(): string`
@@ -105,6 +106,10 @@ EnvManager::someMethod(example $someParam);
 ##### `newFromPath(string $filePath, bool $withAppKey = false): self`
 Создать файл окружения путем копирования содержимого файла по указанному полному пути. Полная перезагрузка переменных окружения. Если параметр `$withAppKey` указан как `true`, то будет сгенерирован новый ключ приложения `APP_KEY`.
 
+<a name="method-withNewAppKey"></a>
+##### `withNewAppKey(): self`
+Создать новый ключ приложения.
+
 #### Пример использования
 
 ```php
@@ -113,9 +118,10 @@ use Russsiq\EnvManager\Facades\EnvManager;
 // Если файл не существует.
 if (! EnvManager::fileExists()) {
 
-    // Создаем новый файл из образца,
-    // попутно генерируя ключ для приложения.
-    EnvManager::newFromPath(base_path('.env.example'), true)
+    // Создаем новый файл из образца.
+    EnvManager::newFromPath(base_path('.env.example'))
+        // Попутно генерируем ключ для приложения.
+        ->withNewAppKey()
         // Устанавливаем необходимые значения.
         ->setMany([
             'APP_NAME' => 'Example site',
@@ -126,7 +132,6 @@ if (! EnvManager::fileExists()) {
         ])
         // Сохраняем новый файл в корне как `.env`.
         ->save();
-
 }
 
 // Распечатаем для примера
