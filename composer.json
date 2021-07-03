@@ -36,8 +36,7 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
-        "test-win": "vendor\\bin\\phpunit",
-        "testdox": "vendor\\bin\\phpunit --testdox-html tests/testdox.html"
+        "testdox": "vendor/bin/phpunit --testdox-html tests/testdox.html"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

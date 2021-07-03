@@ -141,13 +141,7 @@ dump(EnvManager::get('APP_NAME')); // -> `Example site`
 composer run-script test
 ```
 
-Для запуска тестов под Windows используйте команду:
-
-```console
-composer run-script test-win
-```
-
-Для формирования agile-документации, генерируемой в HTML-формате и записываемой в файл [tests/testdox.html](tests/testdox.html), используйте команду:
+Для запуска тестов и формирования agile-документации, генерируемой в HTML-формате и записываемой в файл [tests/testdox.html](tests/testdox.html), используйте команду:
 
 ```console
 composer run-script testdox
