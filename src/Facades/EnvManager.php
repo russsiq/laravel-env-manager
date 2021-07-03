@@ -3,6 +3,7 @@
 namespace Russsiq\EnvManager\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Russsiq\EnvManager\Contracts\EnvManagerContract;
 
 /**
  * @method static string filePath();
@@ -28,6 +29,6 @@ class EnvManager extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return 'env-manager';
+        return EnvManagerContract::class;
     }
 }
