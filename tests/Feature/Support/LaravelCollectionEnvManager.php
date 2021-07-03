@@ -65,7 +65,7 @@ class LaravelCollectionEnvManagerTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->manager = new LaravelCollectionEnvManager(
+        $this->manager = new EnvManager(
             $this->environmentFilePath = self::DUMMY_DIR.'/.env',
             $this->cipher = self::DUMMY_CIPHER
         );
@@ -214,7 +214,7 @@ class LaravelCollectionEnvManagerTest extends TestCase
         // Перед проверкой переменных файла создадим его.
         file_put_contents($this->environmentFilePath, $this->simpleTestingStringableContent(), LOCK_EX);
 
-        $this->manager = new LaravelCollectionEnvManager($this->environmentFilePath, $this->cipher);
+        $this->manager = new EnvManager($this->environmentFilePath, $this->cipher);
         $this->assertInstanceOf(EnvManagerContract::class, $this->manager);
         $this->assertTrue($this->manager->has('APP_NAME'));
 
@@ -248,7 +248,7 @@ class LaravelCollectionEnvManagerTest extends TestCase
         // Перед проверкой переменных файла создадим его.
         file_put_contents($this->environmentFilePath, $this->simpleTestingStringableContent(), LOCK_EX);
 
-        $this->manager = new LaravelCollectionEnvManager($this->environmentFilePath, $this->cipher);
+        $this->manager = new EnvManager($this->environmentFilePath, $this->cipher);
         $this->assertInstanceOf(EnvManagerContract::class, $this->manager);
         $this->assertSame('Example', $this->manager->get('APP_NAME'));
 
@@ -269,7 +269,7 @@ class LaravelCollectionEnvManagerTest extends TestCase
         // Перед проверкой переменных файла создадим его.
         file_put_contents($this->environmentFilePath, $this->simpleTestingStringableContent(), LOCK_EX);
 
-        $this->manager = new LaravelCollectionEnvManager($this->environmentFilePath, $this->cipher);
+        $this->manager = new EnvManager($this->environmentFilePath, $this->cipher);
         $this->assertInstanceOf(EnvManagerContract::class, $this->manager);
         $this->assertSame('default', $this->manager->get('not-exist', 'default'));
 
@@ -326,7 +326,7 @@ class LaravelCollectionEnvManagerTest extends TestCase
         // Перед проверкой переменных файла создадим его.
         file_put_contents($this->environmentFilePath, $this->simpleTestingStringableContent(), LOCK_EX);
 
-        $this->manager = new LaravelCollectionEnvManager($this->environmentFilePath, $this->cipher);
+        $this->manager = new EnvManager($this->environmentFilePath, $this->cipher);
         $this->assertInstanceOf(EnvManagerContract::class, $this->manager);
         $this->assertSame('Example', $this->manager->get('APP_NAME'));
 
@@ -354,7 +354,7 @@ class LaravelCollectionEnvManagerTest extends TestCase
         // Перед проверкой переменных файла создадим его.
         file_put_contents($filePath, $this->simpleTestingStringableContent(), LOCK_EX);
 
-        $this->manager = new LaravelCollectionEnvManager($this->environmentFilePath, $this->cipher);
+        $this->manager = new EnvManager($this->environmentFilePath, $this->cipher);
         $this->assertInstanceOf(EnvManagerContract::class, $this->manager);
         $this->assertNull($this->manager->get('APP_NAME'));
 
@@ -384,7 +384,7 @@ class LaravelCollectionEnvManagerTest extends TestCase
         // Перед проверкой переменных файла создадим его.
         file_put_contents($filePath, $this->simpleTestingStringableContent(), LOCK_EX);
 
-        $this->manager = new LaravelCollectionEnvManager($this->environmentFilePath, $this->cipher);
+        $this->manager = new EnvManager($this->environmentFilePath, $this->cipher);
         $this->assertInstanceOf(EnvManagerContract::class, $this->manager);
         $this->assertNull($this->manager->get('APP_NAME'));
         $this->assertNull($this->manager->get('APP_KEY'));

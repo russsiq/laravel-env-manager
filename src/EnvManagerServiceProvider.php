@@ -4,8 +4,8 @@ namespace Russsiq\EnvManager;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use Russsiq\EnvManager\Contracts\EnvManagerContract;
-use Russsiq\EnvManager\Support\EnvManager;
+use Russsiq\EnvManager\Contracts\EnvManager;
+use Russsiq\EnvManager\Support\LaravelCollectionEnvManager;
 
 class EnvManagerServiceProvider extends ServiceProvider
 {
@@ -17,9 +17,9 @@ class EnvManagerServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(
-            EnvManagerContract::class,
+            EnvManager::class,
             function (Application $app) {
-                return new EnvManager(
+                return new LaravelCollectionEnvManager(
                     $app->environmentFilePath(),
                     $app->config->get('app.cipher')
                 );

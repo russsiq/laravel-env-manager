@@ -7,7 +7,7 @@ namespace Russsiq\EnvManager\Contracts;
  *
  * @var interface
  */
-interface EnvManagerContract
+interface EnvManager
 {
     /**
      * Регулярка для проверки имени ключа перед сохранением.

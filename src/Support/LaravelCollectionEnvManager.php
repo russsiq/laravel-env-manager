@@ -3,7 +3,7 @@
 namespace Russsiq\EnvManager\Support;
 
 use Illuminate\Support\Collection;
-use Russsiq\EnvManager\Contracts\EnvManagerContract;
+use Russsiq\EnvManager\Contracts\EnvManager;
 use Russsiq\EnvManager\Exceptions\NothingToSave;
 use Russsiq\EnvManager\Exceptions\UnableToRead;
 use Russsiq\EnvManager\Exceptions\UnableToWrite;
@@ -11,7 +11,7 @@ use Russsiq\EnvManager\Exceptions\UnableToWrite;
 /**
  * Менеджер файла переменных окружения.
  */
-class EnvManager implements EnvManagerContract
+class LaravelCollectionEnvManager implements EnvManager
 {
     /**
      * Полный путь к файлу окружения приложения.
@@ -75,7 +75,7 @@ class EnvManager implements EnvManagerContract
      *
      * @return self
      */
-    public function setFilePath(string $filePath): EnvManagerContract
+    public function setFilePath(string $filePath): EnvManager
     {
         $this->filePath = $filePath;
 
@@ -87,7 +87,7 @@ class EnvManager implements EnvManagerContract
      *
      * @return self
      */
-    public function resetFilePath(): EnvManagerContract
+    public function resetFilePath(): EnvManager
     {
         $this->filePath = $this->environmentFilePath;
 
@@ -139,7 +139,7 @@ class EnvManager implements EnvManagerContract
      *
      * @return self
      */
-    public function set(string $name, $value): EnvManagerContract
+    public function set(string $name, $value): EnvManager
     {
         $this->variables->put($name, $value);
 
@@ -153,7 +153,7 @@ class EnvManager implements EnvManagerContract
      *
      * @return self
      */
-    public function setMany(array $data): EnvManagerContract
+    public function setMany(array $data): EnvManager
     {
         foreach ($data as $name => $value) {
             $this->set($name, $value);
@@ -203,7 +203,7 @@ class EnvManager implements EnvManagerContract
      *
      * @NB  Полная перезагрузка переменных окружения.
      */
-    public function newFromPath(string $filePath): EnvManagerContract
+    public function newFromPath(string $filePath): EnvManager
     {
         $this->variables = $this->setFilePath($filePath)
             ->loadVariables();
@@ -214,7 +214,7 @@ class EnvManager implements EnvManagerContract
     /**
      * @inheritDoc
      */
-    public function withNewAppKey(): EnvManagerContract
+    public function withNewAppKey(): EnvManager
     {
         return $this->set('APP_KEY', $this->generateRandomKey());
     }
@@ -243,7 +243,9 @@ class EnvManager implements EnvManagerContract
      */
     protected function loadVariables(): Collection
     {
-        return collect($this->fileExists() ? $this->getContent() : []);
+        return Collection::make(
+            $this->fileExists() ? $this->getContent() : []
+        );
     }
 
     /**
