@@ -222,16 +222,16 @@ class LaravelCollectionEnvManager implements EnvManager
     /**
      * Записать данные в файл.
      *
-     * @param  string  $сontent  Строка для записи
+     * @param  string  $content  Строка для записи
      *
      * @return bool
      */
-    protected function saveContent(string $сontent): bool
+    protected function saveContent(string $content): bool
     {
         // Перед сохранением содержимого файла переключаемся на корневой файл.
         $this->resetFilePath();
 
-        $result = file_put_contents($this->filePath(), $сontent.PHP_EOL, LOCK_EX);
+        $result = file_put_contents($this->filePath(), $content.PHP_EOL, LOCK_EX);
 
         return $this->assertFileWriteIsSuccessful($result) ?: true;
     }
