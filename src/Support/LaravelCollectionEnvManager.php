@@ -172,20 +172,33 @@ class LaravelCollectionEnvManager implements EnvManager
      */
     public function save(): bool
     {
-        $content = $this->variables->mapWithKeys(function ($value, $key) {
+        $content = $this->variables->mapWithKeys(
             // Обрежем пустоты, переносы, табуляцию.
-            return [trim($key) => trim($value)];
-        })->filter(function ($value, $key) {
-            // Отфильтруем пары с невалидными ключами.
-            return 1 === preg_match(self::REGEX_VALID_KEY, $key);
-        })->transform(function ($value, $key) {
-            // Если значение не пустое и оно не допустимо.
-            if ($value && 1 !== preg_match(self::REGEX_ACCEPTABLE_VALUE, $value)) {
-                $value = '"'.addcslashes($value, '"').'"';
+            function (mixed $value, mixed $key) {
+                return [
+                    trim($key) => trim($value)
+                ];
             }
+        )
+        ->filter(
+            // Отфильтруем пары с невалидными ключами.
+            function (mixed $value, mixed $key) {
+                return 1 === preg_match(self::REGEX_VALID_KEY, $key);
+            }
+        )
+        ->transform(
+            // Выполним дополнительные преобразования.
+            // К этому моменту ключи должны иметь тип `string`.
+            function (mixed $value, string $key) {
+                // Если значение не пустое и оно не допустимо без экранирования.
+                if ($value && 1 !== preg_match(self::REGEX_ACCEPTABLE_VALUE, $value)) {
+                    $value = '"'.addcslashes($value, '"').'"';
+                }
 
-            return $key.'='.$value;
-        })->values()
+                return $key.'='.$value;
+            }
+        )
+            ->values()
             ->sort()
             ->implode(PHP_EOL);
 
@@ -282,7 +295,9 @@ class LaravelCollectionEnvManager implements EnvManager
      */
     protected function generateKey(string $cipher): string
     {
-        return random_bytes($cipher === 'AES-128-CBC' ? 16 : 32);
+        return random_bytes(
+            'AES-128-CBC' === $cipher ? 16 : 32
+        );
     }
 
     /**
@@ -296,7 +311,7 @@ class LaravelCollectionEnvManager implements EnvManager
      */
     protected function assertContentIsNotEmpty($content): void
     {
-        if (! is_string($content) || '' === $content) {
+        if (! is_string($content) || empty($content)) {
             throw new NothingToSave($this->filePath());
         }
     }
