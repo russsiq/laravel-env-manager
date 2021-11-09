@@ -34,7 +34,7 @@ class VariableException extends DomainException
     public static function invalidKeyFormat(string $key): self
     {
         return new self(sprintf(
-            "Format key [%s] is not supported for environment variable.",
+            "Format of key [%s] is not supported for environment variable.",
             $key
         ));
     }
