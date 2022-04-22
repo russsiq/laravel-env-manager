@@ -1,6 +1,6 @@
 {
     "name": "russsiq/laravel-env-manager",
-    "description": "Менеджер файла переменных окружения Laravel 8.x.",
+    "description": "Менеджер файла переменных окружения Laravel 9.x.",
     "keywords": [
         "laravel",
         "environment-file"
@@ -17,11 +17,11 @@
         }
     ],
     "require": {
-        "php": "8.0.*",
-        "illuminate/support": "8.*"
+        "php": "8.1.*",
+        "illuminate/support": "9.*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5.6"
+        "phpunit/phpunit": "^9.5.20"
     },
     "autoload": {
         "psr-4": {
